@@ -1,0 +1,5 @@
+RegisterNetEvent('ARCADIASERVER:NOTIFICACAO')
+AddEventHandler('ARCADIASERVER:NOTIFICACAO', function(menssagem)
+    local msg = table.concat( menssagem, " ", 1, tableCounter(menssagem) )
+    TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1,msg)
+end)

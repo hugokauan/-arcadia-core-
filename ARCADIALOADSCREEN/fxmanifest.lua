@@ -1,0 +1,15 @@
+-- Resource Metadata
+fx_version 'cerulean'
+game'gta5' 
+
+author 'Carvalho'
+description 'ARCADIA ANIMATIONS'
+version '1.0.0'
+
+-- What to run
+loadscreen 'arcadia.html'
+file 'arcadia.html'
+
+server 'server.lua'
+
+loadscreen_cursor 'yes'

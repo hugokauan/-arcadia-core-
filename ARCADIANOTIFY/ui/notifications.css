@@ -1,0 +1,28 @@
+@font-face {
+    font-family: priceDown;
+    src: url(pricedown_bl.otf);
+}
+
+.notifymain {
+    display: none;
+    position: absolute;
+    color: white;
+    top: 10%;
+    left: 75%;
+}
+
+#notify {
+    padding: 50px 180px;
+    position: absolute;
+    color: rgb(255, 0, 0);
+    top: 10%;
+    left: 75%;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,0.9458158263305322) 0%, rgba(0,0,0,0.44441526610644255) 41%, rgba(0,0,0,0) 59%);
+    border-radius: 5px;
+    border: 2px solid rgba(255, 166, 0, 0.603);
+    border-top: none;
+    border-right: none;
+    font-family: priceDown;
+    font-weight: bolder;
+}
