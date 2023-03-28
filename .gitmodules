@@ -1,0 +1,3 @@
+[submodule "ARCADIACORE"]
+	path = ARCADIACORE
+	url = https://github.com/hugokauan/-arcadia-core-
