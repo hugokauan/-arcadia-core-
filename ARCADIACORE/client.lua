@@ -1,4 +1,4 @@
-local github = "https://github.com/hugokauan/-arcadia-core-"
+
 
 local playerSpawned = false
 AddEventHandler('playerSpawned', function()
