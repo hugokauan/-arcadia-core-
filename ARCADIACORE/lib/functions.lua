@@ -255,3 +255,23 @@ function enviarMsgDiscordWh(webhookLink,menssagem)
     }
     PerformHttpRequest(whLink, function(err,text,headers)end, 'POST', json.encode(data), {['Content-Type']= 'application/json'})
 end
+
+
+
+---------- CLIENT
+
+function getOutfit(source)
+    local playerPed = GetPlayerPed(-1)
+    local playerOutfit = {}
+
+    for i = 0,11 do
+        playerOutfit[i]= {
+            drawable = GetPedDrawableVariation(playerPed, i),
+            texture = GetPedTextureVariation(playerPed, i)
+        }
+    end
+
+    return json.encode(playerOutfit)
+end
+
+----------

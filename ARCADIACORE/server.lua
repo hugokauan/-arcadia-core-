@@ -121,12 +121,24 @@ AddEventHandler('arcadia:serversetspawnpos', function()
     end
 end)
 
+RegisterNetEvent('arcadia_server:saveoutfit')
+AddEventHandler('arcadia_server:saveoutfit', function(outfit)
+    local pOutfit = outfit
+    local id = getPlayerId(source)
+    MySQL.Async.execute('UPDATE players_data SET outfit = ? WHERE id = ? ', {pOutfit,id}, function(affectedRows)
+        if affectedRows then
+            print(affectedRows)
+        end
+    end)
+end)
+
 AddEventHandler('playerDropped', function(reason) 
     local playerSrc = source
     local ped = GetPlayerPed(playerSrc)
     local x,y,z = table.unpack(GetEntityCoords(ped))
     local id = getPlayerId(source)
     print("antes de salvar")
+    TriggerClientEvent('arcadia_client:saveoutfit', -1)
     TriggerEvent('arcadia:updateplayerpos',x,y,z,id) 
     print("informações salvas ", playerSrc)
 end)

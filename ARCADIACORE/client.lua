@@ -25,6 +25,11 @@ AddEventHandler('arcadia:setspawnpos', function(x,y,z)
     SetPedHairColor(playerPed, 20, 23)
 end)
 
+RegisterNetEvent('arcadia_client:saveoutfit')
+AddEventHandler('arcadia_client:saveoutfit', function ()
+    TriggerServerEvent('arcadia_server:saveoutfit', getOutfit())
+end)
+
 RegisterCommand('tpcds', function(source,args,raw)
     local x,y,z = tonumber(args[1]),tonumber(args[2]),tonumber(args[3])
     teleportCDS(x,y,z)
