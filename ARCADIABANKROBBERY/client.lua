@@ -1,7 +1,6 @@
-RegisterNetEvent('arcadia:startroubo')
-AddEventHandler('arcadia:startroubo', function(ped)
-    print('eventtriggered')
-    ped = ped
+RegisterNetEvent('arcadia:endroubo')
+AddEventHandler('arcadia:endroubo', function(ped)
+    local ped = ped
     local animDict = "anim@heists@ornate_bank@grab_cash_heels"
     local animToPlay = "grab"
     while not HasAnimDictLoaded(animDict) do
@@ -29,7 +28,7 @@ Citizen.CreateThread(function()
                 DrawMarker(27, v.x, v.y, v.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 idle = 0
                 if IsControlJustReleased(0, 46) then
-                    TriggerEvent('arcadia:startroubo',playerPed)
+                    TriggerServerEvent('arcadia:startroubo',playerPed,v.type)
                 end
             else
                 idle = 500

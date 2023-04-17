@@ -16,3 +16,14 @@ bancos = {
     }
 
 }
+
+cfg = {
+    atm = {
+        qtdmin = 500,
+        qtdmax = 1000
+    },
+    banco = {
+        qtdmin = 50000,
+        qtdmax = 100000
+    }
+}
