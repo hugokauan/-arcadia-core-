@@ -37,15 +37,3 @@ AddEventHandler('arcadia:fixvehicle', function()
         SetVehicleEngineOn(carro, true, true, false)
     end
 end)
-
-Citizen.CreateThread(function()
-    local id = nil
-    RegisterNetEvent('arcadia:receiveid')
-    AddEventHandler('arcadia:receiveid', function(receive) id = receive end)
-    TriggerServerEvent('teste')
-    while true do
-        --print(id)
-        Citizen.Wait(1000)
-    end
-end)
-

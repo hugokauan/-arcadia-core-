@@ -1,28 +1,10 @@
 local playerSpawned = false
---ARCADIA = {}
---ARCADIA.player = {}
-
---[[exports('getData',function()
-    return ARCADIA
-end)]]
 
 AddEventHandler('playerSpawned', function()
     Citizen.Wait(1000)
     TriggerServerEvent('arcadia:serversetspawnpos')
     playerSpawned = true
     Citizen.Wait(1)
-end)
-
-RegisterNetEvent('arcadia:getdata')
-AddEventHandler('arcadia:getdata', function(data)
-    ARCADIA = data
-end)
-
-Citizen.CreateThread(function()
-    while ARCADIA == nil do
-        TriggerServerEvent('arcadia:senddata')
-        Citizen.Wait(1)
-    end
 end)
 
 

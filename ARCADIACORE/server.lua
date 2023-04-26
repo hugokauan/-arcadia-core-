@@ -1,10 +1,3 @@
---ARCADIA = {}
---ARCADIA.player = {}
-
---[[exports('getData',function()
-    return ARCADIA
-end)]]
-
 AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
     local source = source
     local steamid

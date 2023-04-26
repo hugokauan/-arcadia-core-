@@ -39,11 +39,3 @@ RegisterCommand('alertall', function(source,args)
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Permissão Insuficiente")
     end
 end)
-
-RegisterNetEvent('teste')
-AddEventHandler('teste', function()
-    local source = source
-    local id = ARCADIA.getPlayerId(source)
-    TriggerClientEvent('arcadia:receiveid', -1, id)
-end)
-    
