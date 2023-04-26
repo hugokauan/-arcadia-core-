@@ -5,7 +5,7 @@ RegisterCommand('ban', function(source,args)
     table.remove(args[1])
     local tablecount = tableCounter(args)
     local motivo = table.concat( args, " ")
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         banPlayer(firstArg)
         DropPlayer(steamId, motivo)
     end
@@ -13,7 +13,7 @@ end)
 
 RegisterCommand('wl', function(source,args)
     local playerSrc = source
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         wlPlayer(tonumber(args[1]))
     end
 end)

@@ -1,15 +1,4 @@
 local lastrobbery = 0
-
-Citizen.CreateThread(function()
-    while true do
-        time = os.time()
-        Citizen.Wait(100)
-    end
-end)
-
-
-
-
 RegisterNetEvent('arcadia:startroubo')
 AddEventHandler('arcadia:startroubo', function(ped,tipo)
     local tipo = tipo
@@ -32,8 +21,16 @@ AddEventHandler('arcadia:startroubo', function(ped,tipo)
 
         adddinheiro(id,qtd)
         lastrobbery = os.time()
+        sendwebhookmessage("https://discord.com/api/webhooks/1097710175693049967/NN3elIMP98ofuNNji-sPeZXXdRcy7Blw5jySGCFrVZnoEa0T6TRa9348_T9oK0o2ecmR","```yaml\n[UM " .. tipo..  " FOI ROUBADO PELO JOGADOR DE ID: ".. id .. "]```")
     else
         local menssagem = "o " .. tipo .. " foi roubado recentemente"
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1, menssagem)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        time = os.time()
+        Citizen.Wait(100)
     end
 end)

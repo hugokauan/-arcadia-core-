@@ -11,17 +11,17 @@ AddEventHandler('arcadia:createvehicle', function(carroimport)
             Citizen.Wait(50)
         end
         if HasModelLoaded(carro) then
-            x,y,z = getPlayerCoords()
+            x,y,z = ARCADIA.getPlayerCoords()
             heading = GetEntityHeading(GetPlayerPed(-1))
             CreateVehicle(carro, x-2, y-0.5, z, heading, false, false)
             Citizen.Wait(100)
-            PutPlayerInClosestVehicle()
+            ARCADIA.PutPlayerInClosestVehicle()
         end
     end
 end)
 
 AddEventHandler('arcadia:deletevehicle', function()
-    local carro = GetClosestVehicle()
+    local carro = ARCADIA.GetClosestVehicle()
     if carro then
         Citizen.Wait(50)
         DeleteVehicle(carro)
@@ -29,12 +29,23 @@ AddEventHandler('arcadia:deletevehicle', function()
 end)
 
 AddEventHandler('arcadia:fixvehicle', function()
-    local carro = GetClosestVehicle()
+    local carro = ARCADIA.GetClosestVehicle()
     if carro then
         SetVehicleFixed(carro)
         SetVehicleEngineHealth(carro, 1000.0)
         SetVehicleBodyHealth(carro, 1000.0)
         SetVehicleEngineOn(carro, true, true, false)
+    end
+end)
+
+Citizen.CreateThread(function()
+    local id = nil
+    RegisterNetEvent('arcadia:receiveid')
+    AddEventHandler('arcadia:receiveid', function(receive) id = receive end)
+    TriggerServerEvent('teste')
+    while true do
+        --print(id)
+        Citizen.Wait(1000)
     end
 end)
 

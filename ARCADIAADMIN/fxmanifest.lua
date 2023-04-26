@@ -9,3 +9,7 @@ version '1.0.0'
 -- What to run
 client_script {'client.lua','@ARCADIACORE/lib/functions.lua','@ARCADIACORE/lib/events.lua'}
 server_script {'server.lua','@ARCADIACORE/lib/functions.lua','@ARCADIACORE/lib/events.lua'}
+
+dependencies {
+    'ARCADIACORE'
+}

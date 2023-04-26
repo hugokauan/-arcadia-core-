@@ -12,27 +12,28 @@ AddEventHandler('arcadia:endroubo', function(ped)
         Citizen.Wait(5000)
         ClearPedTasksImmediately(ped)
     end
-    print('anim played')
 end)
 
 Citizen.CreateThread(function()
     local playerPed = PlayerPedId()
-    idle = 500
+    local idle = 500
     local distancia
     while true do
-        Citizen.Wait(idle)
         local x,y,z = table.unpack(GetEntityCoords(playerPed))
         for k,v in pairs(bancos) do 
             distancia = GetDistanceBetweenCoords(x,y,z, v.x, v.y, v.z, false)
             if distancia <= 5 then
-                DrawMarker(27, v.x, v.y, v.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
+                DrawMarker(27, v.x, v.y, v.z-0.99, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 idle = 0
-                if IsControlJustReleased(0, 46) then
-                    TriggerServerEvent('arcadia:startroubo',playerPed,v.type)
+                if distancia < 1 then
+                    if IsControlJustReleased(0, 46) then
+                        TriggerServerEvent('arcadia:startroubo',playerPed,v.type)
+                    end
                 end
             else
                 idle = 500
             end
         end
+        Citizen.Wait(idle)
     end
 end)

@@ -1,4 +1,9 @@
+--ARCADIA = {}
+--ARCADIA.player = {}
 
+--[[exports('getData',function()
+    return ARCADIA
+end)]]
 
 AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
     local source = source
@@ -42,21 +47,15 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
                 
                 --inserindo o steamid
                 MySQL.insert('INSERT INTO players (steamid, discordid, ip) VALUES (?, ?, ?) ', {steamid, discordid, ip}, function(id)
-                    --print(id)
                 end)
             end
         end)
-        pId = getPlayerId(source)
+        pId = ARCADIA.getPlayerId(source)
         Citizen.Wait(1000)
-        --[[while not pId do
-            pId = getPlayerId(source)
-                Citizen.Wait(1)
-        end]]
         if pId then
             MySQL.scalar('SELECT id FROM players_data WHERE id = ?', {pId}, function(idreturndata)
                 if not idreturndata then
-                    MySQL.insert('INSERT INTO players_data (id, grupo, dinheiro ,banco) VALUES (?, ?, ?, ?) ', {pId, 'jogador', 500, 0}, function(id)
-                        --print(id)     
+                    MySQL.insert('INSERT INTO players_data (id, grupo, dinheiro ,banco) VALUES (?, ?, ?, ?) ', {pId, 'jogador', 500, 0}, function(id)    
                     end)
                 end
             end)
@@ -64,7 +63,6 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
             print('id não identificado')
         end
 
-        -- check ban n wl  
     end
 
 
@@ -72,8 +70,8 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
         deferrals.done('Você deve estar com sua conta steam aberta para conectar-se ao nosso servidor')
         print("erro ao conectar com o steamid")
     else
-        local isBanned = isPlayerBanned(source)
-        local isWl = isPlayerWl(source)
+        local isBanned = ARCADIA.isPlayerBanned(source)
+        local isWl = ARCADIA.isPlayerWl(source)
         if isWl then
             if not isBanned then
                 deferrals.done()
@@ -87,6 +85,24 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
     end
 end)
 
+RegisterNetEvent('arcadia:getdata')
+AddEventHandler('arcadia:getdata', function()
+    local id = ARCADIA.getPlayerId(source)
+    Citizen.Wait(10)
+    ARCADIA.player.money = ARCADIA.getPlayerMoney(id)
+    ARCADIA.player.banco = ARCADIA.getPlayerBanco(id)
+    ARCADIA.player.group = ARCADIA.getPlayerGroup(id)
+    ARCADIA.player.org = ARCADIA.getPlayerOrg(id)
+    TriggerClientEvent('arcadia:receivedata', -1, ARCADIA)
+end)
+
+RegisterNetEvent('arcadia:updatedata')
+AddEventHandler('arcadia:updatedata', function()
+    local id = ARCADIA.getPlayerId(source)
+    ARCADIA.player.money = ARCADIA.getPlayerMoney(id)
+    ARCADIA.player.banco = ARCADIA.getPlayerBanco(id)
+    TriggerClientEvent('arcadia:receivedata', -1, ARCADIA)
+end)
 
 RegisterNetEvent('arcadia:updateplayerpos')
 AddEventHandler('arcadia:updateplayerpos',function(x,y,z,id)
@@ -109,22 +125,28 @@ AddEventHandler('arcadia:serversetspawnpos', function()
     local playerSrc = source
     local coords
     local ids = GetPlayerIdentifiers(source)
-    local id = getPlayerId(source)
+    local id = ARCADIA.getPlayerId(source)
     local playerpos = MySQL.scalar.await('SELECT lastposition FROM players_data WHERE id = ?', {id})
     if playerpos then
-        coords = stringsplit(playerpos,",")
+        coords = ARCADIA.stringsplit(playerpos,",")
         local sx,sy,sz = table.unpack(coords)
         local x,y,z = tonumber(sx),tonumber(sy),tonumber(sz)
         TriggerClientEvent('arcadia:setspawnpos', playerSrc, x,y,z+2)
     else
-        print('não há ultima posição do jogador: ', getPlayerId(source))
+        print('não há ultima posição do jogador: ', ARCADIA.getPlayerId(source))
     end
 end)
 
+
+pOutfit = nil 
+RegisterNetEvent('receive:outfit')
+AddEventHandler('receive:outfit', function(outfit)
+    pOutfit = outfit
+end)
+
 RegisterNetEvent('arcadia_server:saveoutfit')
-AddEventHandler('arcadia_server:saveoutfit', function(outfit)
-    local pOutfit = outfit
-    local id = getPlayerId(source)
+AddEventHandler('arcadia_server:saveoutfit', function()
+    local id = ARCADIA.getPlayerId(source)
     MySQL.Async.execute('UPDATE players_data SET outfit = ? WHERE id = ? ', {pOutfit,id}, function(affectedRows)
         if affectedRows then
             print(affectedRows)
@@ -132,13 +154,14 @@ AddEventHandler('arcadia_server:saveoutfit', function(outfit)
     end)
 end)
 
+
 AddEventHandler('playerDropped', function(reason) 
     local playerSrc = source
     local ped = GetPlayerPed(playerSrc)
     local x,y,z = table.unpack(GetEntityCoords(ped))
-    local id = getPlayerId(source)
+    local id = ARCADIA.getPlayerId(source)
     print("antes de salvar")
-    TriggerClientEvent('arcadia_client:saveoutfit', -1)
+    TriggerEvent('arcadia_client:saveoutfit',-1)
     TriggerEvent('arcadia:updateplayerpos',x,y,z,id) 
     print("informações salvas ", playerSrc)
 end)

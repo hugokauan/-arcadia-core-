@@ -6,6 +6,8 @@ author 'Carvalho'
 description 'ARCADIA MISCELÂNIA'
 version '1.0.0'
 
+shared_scripts {'@ARCADIACORE/lib/imports.lua'}
+
 client_scripts {'client.lua','@ARCADIACORE/lib/functions.lua'}
 server_scripts {
                 'server.lua',

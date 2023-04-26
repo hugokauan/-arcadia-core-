@@ -1,6 +1,6 @@
 RegisterCommand('c',function(source, args,rawCommand)
     local playerSrc = source
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         TriggerClientEvent('arcadia:createvehicle',playerSrc, args[1])
     else
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Permissão Insuficiente")
@@ -12,7 +12,7 @@ RegisterCommand('dv',function(source,args)
         args = nil
     end
     local playerSrc = source
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         TriggerClientEvent('arcadia:deletevehicle',playerSrc) 
     else
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Permissão Insuficiente")
@@ -24,7 +24,7 @@ RegisterCommand('consertar',function(source,args)
         args = nil
     end
     local playerSrc = source
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         TriggerClientEvent('arcadia:fixvehicle', playerSrc)
     else
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Permissão Insuficiente")
@@ -33,9 +33,17 @@ end)
 
 RegisterCommand('alertall', function(source,args)
     local playerSrc = source
-    if hasPermission(playerSrc,'admin.permission') then
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
         TriggerEvent('ARCADIASERVER:NOTIFICACAO', args)
     else
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Permissão Insuficiente")
     end
 end)
+
+RegisterNetEvent('teste')
+AddEventHandler('teste', function()
+    local source = source
+    local id = ARCADIA.getPlayerId(source)
+    TriggerClientEvent('arcadia:receiveid', -1, id)
+end)
+    

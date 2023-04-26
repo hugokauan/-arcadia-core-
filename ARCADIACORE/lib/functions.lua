@@ -1,7 +1,11 @@
+ARCADIA = {}
 
+exports('getData',function()
+    return ARCADIA
+end)
 ---------------------------------------------------- Essentials -------------------------------------------------
 
-function stringsplit (inputstr, sep)
+function ARCADIA.stringsplit (inputstr, sep)
 	if sep == nil then
 			sep = "%s"
 	end
@@ -12,7 +16,7 @@ function stringsplit (inputstr, sep)
 	return t
 end
 
-function tableCounter(table)
+function ARCADIA.tableCounter(table)
     local i = 0
     for k,v in pairs(table) do
         i = i + 1
@@ -21,12 +25,12 @@ function tableCounter(table)
 end
 
 ---------------------------------------------------- CLIENT FUNCTIONS -------------------------------------------------
-function getPlayerCoords()
+function ARCADIA.getPlayerCoords()
     x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
     return x,y,z
 end
 
-function createBlip(x,y,z,sprite,scale,color,name)
+function ARCADIA.createBlip(x,y,z,sprite,scale,color,name)
     local blip = AddBlipForCoord(x, y, z)
 			SetBlipSprite(blip, sprite)
 			SetBlipDisplay(blip, 4)
@@ -37,14 +41,14 @@ function createBlip(x,y,z,sprite,scale,color,name)
 			EndTextCommandSetBlipName(blip)
 end
 
-function teleportCDS(x,y,z)
+function ARCADIA.teleportCDS(x,y,z)
 	local zC = GetGroundZFor_3dCoord(x, y, z, true)
 	local player = PlayerPedId()
 	print(x,y,z)
 	SetEntityCoords(player, x, y, zC, false, false, false, false)
 end
 
-function settimer(tempo)
+function ARCADIA.settimer(tempo)
 	local segundo = 1000
 	while tempo > 0 do 
 		tempo = tempo - 1
@@ -55,8 +59,8 @@ end
 
 
 ---------------------------------------------------- Spawn Manager -------------------------------------------------
-function getPlayerLastPos()
-	local x,y,z = getPlayerCoords()
+function ARCADIA.getPlayerLastPos()
+	local x,y,z = ARCADIA.getPlayerCoords()
     return x,y,z
 end
 
@@ -65,7 +69,7 @@ end
 
 
 
-function getSteamId(source)
+function ARCADIA.getSteamId(source)
     local playerSrc = source
     local ids = GetPlayerIdentifiers(playerSrc)
     local steamID
@@ -77,17 +81,17 @@ function getSteamId(source)
     return steamID
 end
 
-function getSteamIdFromId(idReq)
+function ARCADIA.getSteamIdFromId(idReq)
     local idR = idReq
     local id
     id =  MySQL.scalar.await('SELECT steamid FROM players WHERE id = ?', {idR})
     return id
 end
 
-function getPlayerId(source)
+function ARCADIA.getPlayerId(source)
     local id
     local playerSrc = source
-    local steamId = getSteamId(playerSrc)
+    local steamId = ARCADIA.getSteamId(playerSrc)
     id =  MySQL.scalar.await('SELECT id FROM players WHERE steamid = ?', {steamId})
     return id
 end
@@ -95,26 +99,26 @@ end
 ---------------------------------------------------- ARCADIA GROUPS ------------------------------------------------
 
 
-function getPlayerGroup(player)
+function ARCADIA.getPlayerGroup(player)
 	local grupo
 	local playerids = GetPlayerIdentifiers(player)
-    local id = getPlayerId(player)
+    local id = ARCADIA.getPlayerId(player)
 	grupo = MySQL.scalar.await('SELECT grupo FROM players_data WHERE id = ?', {id})
 	return grupo
 end
 
-function getPlayerOrg(player)
+function ARCADIA.getPlayerOrg(player)
 	local org
 	local playerids = GetPlayerIdentifiers(player)
-    local id = getPlayerId(player)
+    local id = ARCADIA.getPlayerId(player)
 	org = MySQL.scalar.await('SELECT organizacao FROM players_data WHERE id = ?', {id})
 	return org
 end
 
-function hasPermission(source,permission)
+function ARCADIA.hasPermission(source,permission)
     local temPermissao
     local permissao = tostring(permission)
-    local pgroup  = getPlayerGroup(source)
+    local pgroup  = ARCADIA.getPlayerGroup(source)
     local groups = config.groups
     local grupo
     for k,v in pairs(config.groups) do
@@ -143,7 +147,7 @@ end
 ---------------------------------------------------- FUNÇÕES DE ENTIDADES ------------------------------------------------
 
 -- Função para encontrar o veículo mais próximo
-function GetClosestVehicle()
+function ARCADIA.GetClosestVehicle()
     -- Armazena a posição atual do jogador
     local playerCoords = GetEntityCoords(PlayerPedId(), true)
     local vehicles = GetGamePool('CVehicle')
@@ -172,9 +176,9 @@ function GetClosestVehicle()
 end
 
 -- Função para colocar o jogador no veículo mais próximo
-function PutPlayerInClosestVehicle()
+function ARCADIA.PutPlayerInClosestVehicle()
     -- Chama a função para encontrar o veículo mais próximo
-    closestVehicle = GetClosestVehicle()
+    closestVehicle = ARCADIA.GetClosestVehicle()
 
     -- Verifica se há um veículo próximo
     if closestVehicle ~= nil then
@@ -188,7 +192,7 @@ end
 
 
 -- CLIENT
-function setPlayerModel(model)
+function ARCADIA.setPlayerModel(model)
     local modelo = GetHashKey(model)
     local playerPed
     --if IsModelInCdimage(modelo) and IsModelValid(modelo) then
@@ -205,7 +209,7 @@ end
 
 ---------------------------------------------------- ARCADIA ADMIN ------------------------------------------------
 
-function banPlayer(id)
+function ARCADIA.banPlayer(id)
     MySQL.Async.execute('UPDATE players SET banned = ? WHERE id = ? ', {1, id}, function(affectedRows)
         if affectedRows then
             print(affectedRows)
@@ -213,9 +217,9 @@ function banPlayer(id)
     end)
 end
 
-function isPlayerBanned(source)
+function ARCADIA.isPlayerBanned(source)
     local isBanned
-    local id = getPlayerId(source)
+    local id = ARCADIA.getPlayerId(source)
     local banned = MySQL.prepare.await('SELECT banned FROM players WHERE id = ?', {id})
     if banned == 0 then
         isBanned = false
@@ -225,7 +229,7 @@ function isPlayerBanned(source)
     return isBanned
 end
 
-function wlPlayer(id)
+function ARCADIA.wlPlayer(id)
     MySQL.Async.execute('UPDATE players SET whitelist = ? WHERE id = ? ', {1, id}, function(affectedRows)
         if affectedRows then
             print(affectedRows)
@@ -233,9 +237,9 @@ function wlPlayer(id)
     end)
 end
 
-function isPlayerWl(source)
+function ARCADIA.isPlayerWl(source)
     local isWl
-    local id = getPlayerId(source)
+    local id = ARCADIA.getPlayerId(source)
     local wl = MySQL.prepare.await('SELECT whitelist FROM players WHERE id = ?', {id})
     if wl == 0 then
         isWl = false
@@ -245,40 +249,33 @@ function isPlayerWl(source)
     return isWl
 end
 
-function teleportWay()
+function ARCADIA.teleportWay()
 end
 
-function enviarMsgDiscordWh(webhookLink,menssagem)
-    local whLink = webhook
-    local data = {
-        ['conteudo'] = menssagem
-    }
-    PerformHttpRequest(whLink, function(err,text,headers)end, 'POST', json.encode(data), {['Content-Type']= 'application/json'})
-end
 
 
 
 ---------- CLIENT
 
-function getOutfit(source)
-    local playerPed = GetPlayerPed(-1)
+function ARCADIA.getOutfit()
+    local playerPed = PlayerPedId()
     local playerOutfit = {}
-
+    local savedOutfit
     for i = 0,11 do
         playerOutfit[i]= {
             drawable = GetPedDrawableVariation(playerPed, i),
             texture = GetPedTextureVariation(playerPed, i)
         }
     end
-
-    return json.encode(playerOutfit)
+    savedOutfit = json.encode(playerOutfit)
+    return savedOutfit
 end
 
 ----------
 
 
 --[[FUNÇÕES BANCO]]
-function adddinheiro(id,quantidade)
+function ARCADIA.adddinheiro(id,quantidade)
     local dinheiro = MySQL.prepare.await('SELECT dinheiro FROM players_data WHERE id = ?', {id})
     local saldofinal = dinheiro+quantidade
     MySQL.Async.execute('UPDATE players_data SET dinheiro = ? WHERE id = ? ', {saldofinal, id}, function(affectedRows)
@@ -288,7 +285,7 @@ function adddinheiro(id,quantidade)
     end)
 end
 
-function remdinheiro(id,quantidade)
+function ARCADIA.remdinheiro(id,quantidade)
     local dinheiro = MySQL.prepare.await('SELECT dinheiro FROM players_data WHERE id = ?', {id})
     local saldofinal = dinheiro - quantidade
     MySQL.Async.execute('UPDATE players_data SET dinheiro = ? WHERE id = ? ', {saldofinal, id}, function(affectedRows)
@@ -298,7 +295,7 @@ function remdinheiro(id,quantidade)
     end)
 end
 
-function addbanco(id,quantidade)
+function ARCADIA.addbanco(id,quantidade)
     local bancosaldo = MySQL.prepare.await('SELECT banco FROM players_data WHERE id = ?', {id})
     local saldofinal = bancosaldo+quantidade
     MySQL.Async.execute('UPDATE players_data SET banco = ? WHERE id = ? ', {saldofinal, id}, function(affectedRows)
@@ -308,7 +305,7 @@ function addbanco(id,quantidade)
     end)
 end
 
-function rembanco(id,quantidade)
+function ARCADIA.rembanco(id,quantidade)
     local bancosaldo = MySQL.prepare.await('SELECT banco FROM players_data WHERE id = ?', {id})
     local saldofinal = bancosaldo-quantidade
     MySQL.Async.execute('UPDATE players_data SET banco = ? WHERE id = ? ', {saldofinal, id}, function(affectedRows)
@@ -318,12 +315,24 @@ function rembanco(id,quantidade)
     end)
 end
 
-function getPlayerMoney(id)
+function ARCADIA.getPlayerMoney(id)
     local dinheiro = MySQL.prepare.await('SELECT dinheiro FROM players_data WHERE id = ?', {id})
     return dinheiro
 end
 
-function getPlayerBanco(id)
+function ARCADIA.getPlayerBanco(id)
     local saldo = MySQL.prepare.await('SELECT banco FROM players_data WHERE id = ?', {id})
     return saldo
 end
+
+function ARCADIA.sendwebhookmessage(wh,msg)
+    local whLink = wh
+    local data = {
+        username = "ARCADIACORE",
+        content = msg,
+        avatar_url = nil
+    }
+    PerformHttpRequest(whLink, function(err,text,headers)end, 'POST', json.encode(data), {['Content-Type']= 'application/json'})
+end
+
+

@@ -1,0 +1,1 @@
+ARCADIA = exports['ARCADIACORE']:getData()
