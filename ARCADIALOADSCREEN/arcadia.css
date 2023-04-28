@@ -1,0 +1,8 @@
+#maincontainer {
+    position: absolute;
+    height: 1000px;
+    width: 1900px;
+    color: black;
+    background-color: gray;
+    border-radius: 10px;
+}

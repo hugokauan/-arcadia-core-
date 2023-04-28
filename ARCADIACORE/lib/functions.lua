@@ -82,8 +82,8 @@ function ARCADIA.getSteamId(source)
 end
 
 function ARCADIA.getSteamIdFromId(idReq)
-    local idR = idReq
     local id
+    local idR = tonumber(idReq)
     id =  MySQL.scalar.await('SELECT steamid FROM players WHERE id = ?', {idR})
     return id
 end

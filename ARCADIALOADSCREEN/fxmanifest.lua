@@ -8,8 +8,13 @@ version '1.0.0'
 
 -- What to run
 loadscreen 'arcadia.html'
-file 'arcadia.html'
 
-server 'server.lua'
+files {
+    'arcadia.html',
+    'arcadia.css'
+}
+client_script 'client.lua'
 
-loadscreen_cursor 'yes'
+server_script 'server.lua'
+
+
