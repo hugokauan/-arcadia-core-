@@ -6,6 +6,8 @@ author 'Carvalho'
 description 'ARCADIA ANIMATIONS'
 version '1.0.0'
 
+files {'lib/imports.lua'}
+
 -- What to run
 client_script {'client.lua','@ARCADIACORE/lib/functions.lua'}
 server_script {'server.lua','@ARCADIACORE/lib/functions.lua'}

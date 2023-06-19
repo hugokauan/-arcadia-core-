@@ -16,24 +16,31 @@ end)
 
 Citizen.CreateThread(function()
     local playerPed = PlayerPedId()
-    local idle = 500
+    local playerCoords
     local distancia
+    local marker
+    local idle = 0
     while true do
-        local x,y,z = table.unpack(GetEntityCoords(playerPed))
+        Citizen.Wait(idle)
+        playerCoords = GetEntityCoords(playerPed)
         for k,v in pairs(bancos) do 
-            distancia = GetDistanceBetweenCoords(x,y,z, v.x, v.y, v.z, false)
+            marker = vector3(v.x,v.y,v.z)
+            distancia = #(playerCoords-marker)
             if distancia <= 5 then
-                DrawMarker(27, v.x, v.y, v.z-0.99, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 idle = 0
+                DrawMarker(27, v.x, v.y, v.z-0.99, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 if distancia < 1 then
                     if IsControlJustReleased(0, 46) then
                         TriggerServerEvent('arcadia:startroubo',playerPed,v.type)
                     end
+                else
+                    if distancia > 1 and IsControlJustReleased(0, 46) then
+                        TriggerEvent('ARCADIACLIENT:NOTIFICACAO', "Você está muito distante do " .. v.type)
+                    end
                 end
             else
-                idle = 500
+                idle = 50
             end
         end
-        Citizen.Wait(idle)
     end
 end)

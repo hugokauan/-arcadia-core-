@@ -4,6 +4,7 @@ RegisterNetEvent('arcadia:fixvehicle')
 
 AddEventHandler('arcadia:createvehicle', function(carroimport)
     local carro = GetHashKey(carroimport)
+    local playerPed = PlayerPedId()
     local carroenter
     if carro ~= nil then
         RequestModel(carro)
@@ -12,7 +13,7 @@ AddEventHandler('arcadia:createvehicle', function(carroimport)
         end
         if HasModelLoaded(carro) then
             x,y,z = ARCADIA.getPlayerCoords()
-            heading = GetEntityHeading(GetPlayerPed(-1))
+            heading = GetEntityHeading(playerPed)
             CreateVehicle(carro, x-2, y-0.5, z, heading, false, false)
             Citizen.Wait(100)
             ARCADIA.PutPlayerInClosestVehicle()

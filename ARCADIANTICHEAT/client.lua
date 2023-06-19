@@ -1,30 +1,35 @@
 local keys = {['E'] = 38,['DELETE'] = 178,['ARUP'] = 188,['ARDOWN']= 187,['ARLEFT'] = 189,['ARRIGHT'] = 190}
 local blockedVehs = {"voltic2","deluxo"}
 
-function deleteAllBlockedVehs()
-    local todosVeiculos = GetGamePool('CVehicle')
-    for k,veiculo in pairs(todosVeiculos) do
-        veiculoHash = GetHashKey(veiculo)
-        for _,blockedVeh in pairs(blockedVehs) do
-            blockedVehHash = GetHashKey(blockedVeh)
-            if veiculo == blockedVehHash then
-                DeleteVehicle(veiculo)
-                TriggerServerEvent('arcadia:senddiscordmessage',"https://discord.com/api/webhooks/1086414747286654986/94Vv3nDp9uponoUSRCA36X6frJJwBpb247HVm9FlxM-HEqhIFCLlTi-h3nDIsyvD-KgM","um veículo proíbido foi detectado e deltado")
-            end
-        end
-    end
-end
-
-
-
+-- DISABLE PEDS
 Citizen.CreateThread(function()
+    SetPedPopulationBudget(0)
     while true do
-        Citizen.Wait(100)
-        deleteAllBlockedVehs()
+        SetScenarioPedDensityMultiplierThisFrame(0, 0)
+        SetVehicleDensityMultiplierThisFrame(0)
+        SetParkedVehicleDensityMultiplierThisFrame(0)
+        SetRandomVehicleDensityMultiplierThisFrame(0)
+        Citizen.Wait(0)
     end
 end)
 
+-- DISABLE WANTED LEVEL
+Citizen.CreateThread(function()
+    local player = PlayerId()
+    local playerPed = PlayerPedId()
+    while true do
+        Citizen.Wait(1000)
+        if GetPlayerWantedLevel(player) ~= 0 then
+            SetPlayerWantedLevel(player, 0, false)
+            SetPlayerWantedLevelNow(player, false)
+            SetMaxWantedLevel(0)
+            SetPoliceIgnorePlayer(playerPed, true)
+            SetDispatchCopsForPlayer(playerPed, false)
+        end
+    end
+end)
 
+-- KEY LOGGER
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)

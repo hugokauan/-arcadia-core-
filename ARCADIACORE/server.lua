@@ -1,5 +1,6 @@
 AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
     local source = source
+    local players
     local steamid
     local discordid
     local fivemid
@@ -68,7 +69,7 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
         if isWl then
             if not isBanned then
                 deferrals.done()
-                print("steamid: ",steamid," license: ",licenseid," xbox: ",xboxliveid," fivem: ",fivemid," discord: ",discordid," nome:",playerName)            
+                print("steamid: ",steamid," license: ",licenseid," xbox: ",xboxliveid," fivem: ",fivemid," discord: ",discordid," nome:",playerName)              
             else
                 deferrals.done("Você Está Banido")
             end
@@ -117,16 +118,15 @@ RegisterNetEvent('arcadia:serversetspawnpos')
 AddEventHandler('arcadia:serversetspawnpos', function()
     local playerSrc = source
     local coords
-    local ids = GetPlayerIdentifiers(source)
     local id = ARCADIA.getPlayerId(source)
-    local playerpos = MySQL.scalar.await('SELECT lastposition FROM players_data WHERE id = ?', {id})
+    local playerpos = MySQL.prepare.await('SELECT lastposition FROM players_data WHERE id = ?', {id})
     if playerpos then
         coords = ARCADIA.stringsplit(playerpos,",")
         local sx,sy,sz = table.unpack(coords)
         local x,y,z = tonumber(sx),tonumber(sy),tonumber(sz)
         TriggerClientEvent('arcadia:setspawnpos', playerSrc, x,y,z+2)
     else
-        print('não há ultima posição do jogador: ', ARCADIA.getPlayerId(source))
+        TriggerClientEvent('arcadia:setspawnpos', playerSrc, -1035.13,-2734.10,20.16+2)
     end
 end)
 

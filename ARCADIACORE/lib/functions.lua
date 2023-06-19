@@ -66,9 +66,6 @@ end
 
 
 ---------------------------------------------------- SERVER FUNCTIONS -------------------------------------------------
-
-
-
 function ARCADIA.getSteamId(source)
     local playerSrc = source
     local ids = GetPlayerIdentifiers(playerSrc)
@@ -81,19 +78,59 @@ function ARCADIA.getSteamId(source)
     return steamID
 end
 
-function ARCADIA.getSteamIdFromId(idReq)
-    local id
-    local idR = tonumber(idReq)
-    id =  MySQL.scalar.await('SELECT steamid FROM players WHERE id = ?', {idR})
-    return id
-end
 
 function ARCADIA.getPlayerId(source)
     local id
     local playerSrc = source
     local steamId = ARCADIA.getSteamId(playerSrc)
-    id =  MySQL.scalar.await('SELECT id FROM players WHERE steamid = ?', {steamId})
+    id =  MySQL.prepare.await('SELECT id FROM players WHERE steamid = ?', {steamId})
     return id
+end
+
+function ARCADIA.getSteamIdFromId(idReq)
+    local sid
+    local idR = tonumber(idReq)
+    sid =  MySQL.prepare.await('SELECT steamid FROM players WHERE id = ?', {idR})
+    return sid
+end
+
+function GetAllPlayers()
+    local players = GetPlayers()
+    return players
+end
+
+function ARCADIA.GetSource(identifier)
+    local players = {}
+    players = GetAllPlayers()
+    if identifier then
+        for j, src in pairs(players) do
+            print("dados: "..j,src)
+            local idens = GetPlayerIdentifiers(src)
+            for _, id in pairs(idens) do
+                print ("dados 2: ".._,id)
+                if identifier == id then
+                    return src
+                end
+            end
+        end
+    end
+    return 0
+end
+
+function ARCADIA.GetPlayerSource(steamId)
+    local players = {}
+    local players = GetAllPlayers()
+    for _, playerId in ipairs(players) do
+        local identifiers = GetPlayerIdentifiers(playerId)
+
+        for _, identifier in ipairs(identifiers) do
+            if string.find(identifier, "steam:") and string.sub(identifier, 7) == steamId then
+                return playerId
+            end
+        end
+    end
+
+    return 0
 end
 
 ---------------------------------------------------- ARCADIA GROUPS ------------------------------------------------
@@ -101,7 +138,6 @@ end
 
 function ARCADIA.getPlayerGroup(player)
 	local grupo
-	local playerids = GetPlayerIdentifiers(player)
     local id = ARCADIA.getPlayerId(player)
 	grupo = MySQL.scalar.await('SELECT grupo FROM players_data WHERE id = ?', {id})
 	return grupo
@@ -109,7 +145,6 @@ end
 
 function ARCADIA.getPlayerOrg(player)
 	local org
-	local playerids = GetPlayerIdentifiers(player)
     local id = ARCADIA.getPlayerId(player)
 	org = MySQL.scalar.await('SELECT organizacao FROM players_data WHERE id = ?', {id})
 	return org
@@ -118,7 +153,7 @@ end
 function ARCADIA.hasPermission(source,permission)
     local temPermissao
     local permissao = tostring(permission)
-    local pgroup  = ARCADIA.getPlayerGroup(source)
+    local pgroup = ARCADIA.getPlayerGroup(source)
     local groups = config.groups
     local grupo
     for k,v in pairs(config.groups) do
@@ -210,11 +245,17 @@ end
 ---------------------------------------------------- ARCADIA ADMIN ------------------------------------------------
 
 function ARCADIA.banPlayer(id)
-    MySQL.Async.execute('UPDATE players SET banned = ? WHERE id = ? ', {1, id}, function(affectedRows)
+    local id = id
+    local ban = 1
+    MySQL.update('UPDATE players SET banned = ? WHERE id = ?', {ban, id}, function(affectedRows)
         if affectedRows then
             print(affectedRows)
         end
     end)
+end
+
+function ARCADIA.kickplayer(id)
+    DropPlayer(id, "Você foi expulso do servidor")
 end
 
 function ARCADIA.isPlayerBanned(source)
@@ -230,7 +271,17 @@ function ARCADIA.isPlayerBanned(source)
 end
 
 function ARCADIA.wlPlayer(id)
+    local id = id
     MySQL.Async.execute('UPDATE players SET whitelist = ? WHERE id = ? ', {1, id}, function(affectedRows)
+        if affectedRows then
+            print(affectedRows)
+        end
+    end)
+end
+
+function ARCADIA.unwlPlayer(id)
+    local id = id
+    MySQL.Async.execute('UPDATE players SET whitelist = ? WHERE id = ? ', {0, id}, function(affectedRows)
         if affectedRows then
             print(affectedRows)
         end

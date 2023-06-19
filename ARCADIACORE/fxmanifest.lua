@@ -13,12 +13,14 @@ server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'lib/functions.lua',
     'lib/events.lua',
+    'lib/groups.lua',
     'server.lua'
 }
 
 client_scripts {
     'lib/functions.lua',
     'lib/events.lua',
+    'lib/groups.lua',
     'client.lua'
 }
 
