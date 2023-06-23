@@ -91,23 +91,26 @@ function ARCADIA.getSteamIdFromId(idReq)
     local sid
     local idR = tonumber(idReq)
     sid =  MySQL.prepare.await('SELECT steamid FROM players WHERE id = ?', {idR})
-    return sid
+    if sid then 
+        return sid
+    else
+        print("^2[ARCADIACORE]^3(AVISO) id [".. idR .."] requirido não existe em nossa base de dados")
+    end
+    return nil
 end
 
-function GetAllPlayers()
+function ARCADIA.GetAllPlayers()
     local players = GetPlayers()
     return players
 end
 
 function ARCADIA.GetSource(identifier)
     local players = {}
-    players = GetAllPlayers()
+    players = ARCADIA.GetAllPlayers()
     if identifier then
         for j, src in pairs(players) do
-            print("dados: "..j,src)
             local idens = GetPlayerIdentifiers(src)
             for _, id in pairs(idens) do
-                print ("dados 2: ".._,id)
                 if identifier == id then
                     return src
                 end
@@ -117,7 +120,9 @@ function ARCADIA.GetSource(identifier)
     return 0
 end
 
-function ARCADIA.GetPlayerSource(steamId)
+
+
+--[[function ARCADIA.GetPlayerSource(steamId)
     local players = {}
     local players = GetAllPlayers()
     for _, playerId in ipairs(players) do
@@ -131,7 +136,7 @@ function ARCADIA.GetPlayerSource(steamId)
     end
 
     return 0
-end
+end]] --COMENTADO POIS NÃO FUNCIONA
 
 ---------------------------------------------------- ARCADIA GROUPS ------------------------------------------------
 
@@ -301,6 +306,47 @@ function ARCADIA.isPlayerWl(source)
 end
 
 function ARCADIA.teleportWay()
+    --[[local ped = PlayerPedId()
+    local blip = GetFirstBlipInfoId(8)
+    print("função trigada")]]
+    --[[if ped then
+        print("ped encontrado")
+        if blip then
+            print("waypoint existe")
+            local coords = GetBlipInfoIdCoord(blip)
+            print(coords)
+            local x,y,z = table.unpack(coords)
+            local isGrounded,groundZ
+            for i = 0, 1000,1 do
+                Citizen.Wait(5)
+                print(x,y,z, groundZ,i)
+                if GetGroundZFor_3dCoord(x, y, ToFloat(i), false) then
+                    print("ground found")
+                    z = ToFloat(i)
+                    print(z)
+                    SetEntityCoords(ped, x, y, z, 0, 0, 0, false)
+                    break
+                end
+                print("teleportado")
+            end
+        end
+    end]]
+    local waypointBlip = GetFirstBlipInfoId(GetWaypointBlipEnumId())
+	local blipPos = GetBlipInfoIdCoord(waypointBlip) -- GetGpsWaypointRouteEnd(false, 0, 0)
+
+	local z = GetHeightmapTopZForPosition(blipPos.x, blipPos.y)
+	local _, gz = GetGroundZFor_3dCoord(blipPos.x, blipPos.y, z, true)
+
+	SetEntityCoords(PlayerPedId(), blipPos.x, blipPos.y, z, true, false, false, false)
+	FreezeEntityPosition(PlayerPedId(), true)
+
+	repeat
+		Citizen.Wait(50)
+		_, gz = GetGroundZFor_3dCoord(blipPos.x, blipPos.y, z, true)
+	until gz ~= 0
+
+	SetEntityCoords(PlayerPedId(), blipPos.x, blipPos.y, gz, true, false, false, false)
+	FreezeEntityPosition(PlayerPedId(), false)
 end
 
 

@@ -6,7 +6,7 @@ author 'Carvalho'
 description 'ARCADIA CORE'
 version '1.0.0'
 
-files {'lib/imports.lua'}
+files {'lib/imports.lua','config.lua'}
 
 -- What to run
 server_scripts {
@@ -23,8 +23,6 @@ client_scripts {
     'lib/groups.lua',
     'client.lua'
 }
-
-files {'config.lua'}
 
 
 dependencies {'oxmysql'}

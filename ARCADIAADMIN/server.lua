@@ -70,6 +70,96 @@ RegisterCommand('players', function(source,args)
         print(k,v)
     end
 end)
+
+RegisterCommand('wl', function(source,args)
+    local playerSrc = source
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
+        ARCADIA.wlPlayer(tonumber(args[1]))
+    else
+        print("Não tem permissão")
+    end
+end)
+RegisterCommand('unwl', function(source,args)
+    local playerSrc = source
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
+        ARCADIA.unwlPlayer(tonumber(args[1]))
+    else
+        print("Não tem permissão")
+    end
+end)
+
+RegisterCommand('god', function(source,args)
+    local playerSrc = source
+    local id
+    local sId
+    local pSource
+    local ped
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
+        if args[1] ~= nil then
+            id = tonumber(args[1])
+            sId = ARCADIA.getSteamIdFromId(id)
+            pSource = ARCADIA.GetSource(sId)
+            if pSource ~= 0 then
+                ped = GetPlayerPed(pSource)
+                TriggerClientEvent('arcadia:setentityhealth', pSource)
+            else
+                print("jogador offline")
+            end
+        else
+            if playerSrc then
+                ped = GetPlayerPed(playerSrc)
+                TriggerClientEvent('arcadia:setentityhealth', playerSrc)
+            end
+        end
+    else
+        print("sem permissão")
+    end
+end)
+
+RegisterCommand('tpto', function(source,args)
+    local playerSrc = source
+    local idToTp
+    local targetSId
+    local targetSource
+    if args then
+        if args[1] then
+            idToTp = tonumber(args[1])
+            targetSId = ARCADIA.getSteamIdFromId(idToTp)
+            if targetSId then
+                print("tSid: "..targetSId)
+                targetSource = ARCADIA.GetSource(targetSId)
+                print("tSource: "..targetSource)
+                if targetSource then
+                    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
+                        print("teve permissão")
+                        TriggerClientEvent('arcadia:teleportTo', playerSrc, targetSource)
+                        TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Você se teleportou para o ID: [".. idToTp .. "]")
+                        print("evento trigado")
+                    end
+                else
+                    print("jogador offline")
+                end
+            else
+                TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "O id em que você tentou se teleportar não existe")
+                print("jogador inexistente")
+            end
+        else
+            TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', playerSrc, "Para teleportar ao jogador que deseja digite o id em frente ao comando")
+        end
+    end
+end)
+
+RegisterCommand('tpway', function(source,args)
+    print('comando executado')
+    local playerSrc = source
+    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
+        print("teleported")
+        TriggerClientEvent('arcadia:teleportWaypoint', playerSrc)
+    else
+        print("sem permissão")
+    end
+end)
+
 --[[
 RegisterCommand('testarsteamid', function(source,args)
     local id = tonumber(args[1])
@@ -88,22 +178,6 @@ RegisterCommand('testarsource', function(source,args)
     print("source id: " .. sourceplayer)
 end)]]
 
-RegisterCommand('wl', function(source,args)
-    local playerSrc = source
-    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
-        ARCADIA.wlPlayer(tonumber(args[1]))
-    else
-        print("Não tem permissão")
-    end
-end)
-RegisterCommand('unwl', function(source,args)
-    local playerSrc = source
-    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
-        ARCADIA.unwlPlayer(tonumber(args[1]))
-    else
-        print("Não tem permissão")
-    end
-end)
 
 --[[RegisterCommand('testeban', function(source,args)
     local playerSrc = source

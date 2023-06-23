@@ -14,4 +14,7 @@ server_script {'server.lua','@ARCADIACORE/lib/functions.lua', '@oxmysql/lib/MySQ
 
 dependencies {
     'ARCADIACORE'
+    
+
+
 }

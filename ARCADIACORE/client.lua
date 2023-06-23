@@ -31,13 +31,13 @@ AddEventHandler('arcadia_client:saveoutfit', function ()
     TriggerServerEvent('arcadia_server:saveoutfit', outfit)
 end)
 
-RegisterCommand('tpcds', function(source,args,raw)
+--[[RegisterCommand('tpcds', function(source,args,raw)
     local x,y,z = tonumber(args[1]),tonumber(args[2]),tonumber(args[3])
     teleportCDS(x,y,z)
-end)
+end)]]
 
 RegisterCommand('mycds',function()
-    local x,y,z = getPlayerCoords()
+    local x,y,z = ARCADIA.getPlayerCoords()
     print(x," ",y," ",z)
 end)
 

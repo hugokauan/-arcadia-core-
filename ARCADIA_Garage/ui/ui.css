@@ -1,0 +1,56 @@
+.maindiv{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 400px;
+    right: 200px;
+    background-color: white;
+    color: black;
+    font-weight: bolder;
+    display: none;
+}
+
+.carsdiv{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 400px;
+    right: 200px;
+    background-color: white;
+    color: black;
+    font-weight: bolder;
+    display: none;
+}
+
+#mainnav{
+    position: absolute;
+    width: 510px;
+    height: 50px;
+    top: 5px;
+    right: 0px;
+    background-color: black;
+    color: white;
+    font-weight: bolder;
+}
+
+#carsB{
+    color: white;
+    font-weight: bolder;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#X{
+    position: absolute;
+    color: white;
+    font-weight: bolder;
+    background-color: black;
+    left: 480px;
+}
+
+#X2{
+    position: absolute;
+    color: white;
+    font-weight: bolder;
+    background-color: black;
+    left: 480px;
+}
