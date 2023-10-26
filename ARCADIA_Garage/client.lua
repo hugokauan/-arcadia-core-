@@ -1,3 +1,23 @@
+local carros = {}
+
+RegisterNetEvent('arcadia:clientGetCars')
+AddEventHandler('arcadia:clientGetCars',function()
+    TriggerServerEvent('arcadia:getCars')
+end)
+
+RegisterNetEvent('arcadia:receiveCars')
+AddEventHandler('arcadia:receiveCars',function(c)
+    cars = c
+        SendNUIMessage(
+            {
+                type = "sendCars",
+                carros = cars
+            }
+        )
+end)
+
+
+
 Citizen.CreateThread(function()
     local idle
     local coords
@@ -16,6 +36,7 @@ Citizen.CreateThread(function()
                 if distancia <= 1 then
                     if IsControlJustReleased(0,46) then
                         TriggerEvent('arcadia:openGarageUI')
+                        TriggerEvent('arcadia:clientGetCars')
                     end
                 end
             else

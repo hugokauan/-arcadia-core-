@@ -23,3 +23,4 @@ end)
 RegisterNUICallback('close', function(data)
     TriggerEvent('arcadia:closeGarageUI')
 end)
+

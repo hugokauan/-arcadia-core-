@@ -99,12 +99,13 @@ AddEventHandler('arcadia:updatedata', function()
 end)
 
 RegisterNetEvent('arcadia:updateplayerpos')
-AddEventHandler('arcadia:updateplayerpos',function(x,y,z,id)
+AddEventHandler('arcadia:updateplayerpos',function(pcoords,id)
     local playerSrc = source
-    local playerPosVec3 = table.pack(x,y,z)
+    local x,y,z = table.unpack(pcoords)
+    local packedCoords = table.pack(x,y,z)
     --local ids = GetPlayerIdentifiers(playerSrc)
     --local id = getPlayerId(playerSrc)
-    local coords = table.concat(playerPosVec3, "," )
+    local coords = table.concat(packedCoords, ",")
     MySQL.Async.execute('UPDATE players_data SET lastposition = ? WHERE id = ? ', {coords,id}, function(affectedRows)
         if affectedRows then
             --print(affectedRows)
@@ -124,9 +125,11 @@ AddEventHandler('arcadia:serversetspawnpos', function()
         coords = ARCADIA.stringsplit(playerpos,",")
         local sx,sy,sz = table.unpack(coords)
         local x,y,z = tonumber(sx),tonumber(sy),tonumber(sz)
-        TriggerClientEvent('arcadia:setspawnpos', playerSrc, x,y,z+2)
+        if x and y and z then
+            TriggerClientEvent('arcadia:setspawnpos', playerSrc, x,y,z+2)
+        end
     else
-        TriggerClientEvent('arcadia:setspawnpos', playerSrc, -1035.13,-2734.10,20.16+2)
+        TriggerClientEvent('arcadia:setspawnpos', playerSrc, -1035.13,-2734.10,20.16+2.0)
     end
 end)
 
@@ -152,9 +155,11 @@ AddEventHandler('playerDropped', function(reason)
     local playerSrc = source
     local ped = GetPlayerPed(playerSrc)
     local x,y,z = table.unpack(GetEntityCoords(ped))
-    local id = ARCADIA.getPlayerId(source)
+    local pcoords = GetEntityCoords(ped)
+    local id = ARCADIA.getPlayerId(playerSrc)
+    local playerCoords = table.pack(x,y,z)
     print("antes de salvar")
-    TriggerEvent('arcadia_client:saveoutfit',-1)
-    TriggerEvent('arcadia:updateplayerpos',x,y,z,id) 
+    TriggerEvent('arcadia_client:saveoutfit',playerSrc)
+    TriggerEvent('arcadia:updateplayerpos',playerCoords,id) 
     print("informações salvas ", playerSrc)
 end)

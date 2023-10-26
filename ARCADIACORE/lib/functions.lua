@@ -433,3 +433,45 @@ function ARCADIA.sendwebhookmessage(wh,msg)
 end
 
 
+--- GARAGE FUNCTIONS
+
+
+function ARCADIA.getCars(id)
+    local pId = id
+    local cars
+    local c
+    cars = MySQL.prepare.await('SELECT veiculo FROM player_vehicles WHERE id = ?', {pId})
+        --print(cars)
+            for i=1, #cars do
+                local car = cars[i]
+                --print(car)
+                for k,v in pairs(car) do
+                    --print(v)
+                    c = v
+                    return car
+                end
+            end
+            --print("^2[ARCADIACORE]^3(AVISO) Você não inseriu o player id na função")
+end
+
+function ARCADIA.isJob(source,job)
+    local playerJob
+    local id = ARCADIA.getPlayerId(source)
+	playerJob = MySQL.scalar.await('SELECT trabalho FROM players_data WHERE id = ?', {id})
+    if tostring(playerJob) == tostring(job) then
+	    return true
+    else
+        return false
+    end
+end
+
+function ARCADIA.isCargo(source, cargo)
+    local playerCargo
+    local id = ARCADIA.getPlayerId(source)
+	playerCargo = MySQL.scalar.await('SELECT cargo FROM players_data WHERE id = ?', {id})
+    if tostring(playerCargo) == tostring(cargo) then
+	    return true
+    else
+        return false
+    end
+end

@@ -6,8 +6,6 @@ author 'Carvalho'
 description 'ARCADIA GARAGE'
 version '1.0.0'
 
-shared_scripts {'@ARCADIACORE/lib/imports.lua'}
-
 files {
         'ui/*.lua',
         'ui/*.css',
@@ -19,8 +17,19 @@ files {
 ui_page "ui/index.html"
 
 -- What to run
-client_script {'client.lua','@ARCADIACORE/lib/functions.lua','@ARCADIACORE/lib/groups.lua','ui/nui.lua','ui/garagens.lua'}
-server_script {'server.lua','@ARCADIACORE/lib/functions.lua', '@oxmysql/lib/MySQL.lua','@ARCADIACORE/lib/groups.lua'}
+client_script { 
+                'client.lua',
+                '@ARCADIACORE/lib/functions.lua',
+                '@ARCADIACORE/lib/groups.lua',
+                'ui/nui.lua',
+                'ui/garagens.lua'
+}
+server_script {
+                'server.lua',
+                '@ARCADIACORE/lib/functions.lua',
+                '@oxmysql/lib/MySQL.lua',
+                '@ARCADIACORE/lib/groups.lua'
+}
 
 dependencies {
     'ARCADIACORE',

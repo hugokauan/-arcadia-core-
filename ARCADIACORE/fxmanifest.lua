@@ -6,7 +6,12 @@ author 'Carvalho'
 description 'ARCADIA CORE'
 version '1.0.0'
 
-files {'lib/imports.lua','config.lua'}
+client_scripts {
+    'lib/functions.lua',
+    'lib/events.lua',
+    'lib/groups.lua',
+    'client.lua'
+}
 
 -- What to run
 server_scripts {
@@ -17,11 +22,10 @@ server_scripts {
     'server.lua'
 }
 
-client_scripts {
-    'lib/functions.lua',
-    'lib/events.lua',
-    'lib/groups.lua',
-    'client.lua'
+
+files {
+    'lib/imports.lua',
+    'config.lua'
 }
 
 
