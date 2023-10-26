@@ -23,4 +23,5 @@ AddEventHandler('ARCADIA:SETARMAS', function()
     end
 end)
 
+
 --TriggerClientEvent('ARCADIA:SETARARMA', source, 'ARMA_DESEJADA', MUNICOES, DELAY)
