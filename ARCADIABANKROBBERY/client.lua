@@ -21,7 +21,6 @@ Citizen.CreateThread(function()
     local marker
     local idle = 0
     while true do
-        Citizen.Wait(idle)
         playerCoords = GetEntityCoords(playerPed)
         for k,v in pairs(bancos) do 
             marker = vector3(v.x,v.y,v.z)
@@ -43,6 +42,7 @@ Citizen.CreateThread(function()
                 idle = 50
             end
         end
+        Citizen.Wait(idle)
     end
 end)
 
@@ -59,7 +59,6 @@ Citizen.CreateThread(function()
             if distancia <= 5 then
                 DrawMarker(27, v.x, v.y, v.z-0.99, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
             end
-            Citizen.Wait(0)
         end
         Citizen.Wait(0)
     end

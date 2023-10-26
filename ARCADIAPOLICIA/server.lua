@@ -5,17 +5,16 @@ AddEventHandler('ARCADIA:SETARMAS', function()
     if ARCADIA.isJob(source, 'policia') then
         if ARCADIA.isCargo(source, 'soldado') then
             print('Armas Coletadas')
-            --TriggerClientEvent('ARCADIA:SETARARMA', source, 'ARMA_DESEJADA', MUNICOES, DELAY)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_STUNGUN', 1, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_PISTOL', 150, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_NIGHTSTICK', 1, 10)
+            for k,v in pairs(config.policia.soldado) do
+                print(v[1],v[2])
+                TriggerClientEvent('ARCADIA:SETARARMA', source, v[1], v[2], 10)
+            end
         elseif ARCADIA.isCargo(source, 'comandante') then
             print('Armas Coletadas')
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_STUNGUN', 1, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_PISTOL', 150, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_NIGHTSTICK', 1, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_SAWNOFFSHOTGUN', 40, 10)
-            TriggerClientEvent('ARCADIA:SETARARMA', source, 'WEAPON_CARBINERIFLE', 300, 10)
+            for k,v in pairs(config.policia.soldado) do
+                print(v[1],v[2])
+                TriggerClientEvent('ARCADIA:SETARARMA', source, v[1], v[2], 10)
+            end
         end
         local menssagem = "Você Recebeu Suas Armas"
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1, menssagem)
@@ -23,3 +22,5 @@ AddEventHandler('ARCADIA:SETARMAS', function()
         print('você não é policial')
     end
 end)
+
+--TriggerClientEvent('ARCADIA:SETARARMA', source, 'ARMA_DESEJADA', MUNICOES, DELAY)

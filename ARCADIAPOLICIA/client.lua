@@ -37,7 +37,6 @@ Citizen.CreateThread(function()
                     TriggerServerEvent('ARCADIA:SETARMAS')
                 end
             end
-            Citizen.Wait(0)
         end
         Citizen.Wait(0)
     end
