@@ -22,22 +22,23 @@ arsenal = {
 }
 
 Citizen.CreateThread(function()
-    local playerPed = PlayerPedId()
+    local playerPed
     local marker
     local playerCoords
     local distancia
     local idle = 0
     while true do
+        playerPed = PlayerPedId()
         playerCoords = GetEntityCoords(playerPed)
         for k,v in pairs(arsenal) do
             marker = vector3(v.x,v.y,v.z)
             distancia = #(playerCoords-marker)
             if distancia <= 5 then
-                idle = 0
                 DrawMarker(23, v.x, v.y, v.z-0.98, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 if IsControlJustReleased(0, 46) then
                     TriggerServerEvent('ARCADIA:SETARMAS')
                 end
+                idle = 0
             else
                 idle = 100
             end
