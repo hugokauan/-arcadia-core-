@@ -14,9 +14,8 @@ loadscreen_cursor 'yes'
 files {
     'arcadia.html',
     'arcadia.css',
-    'assets/video.mp4',
-    'assets/music.mp3',
-    'assets/video.mpeg'
+    'assets/LoadScreen.mp4',
+    'assets/music.mp3'
 }
 
 

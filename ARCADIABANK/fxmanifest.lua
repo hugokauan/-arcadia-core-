@@ -6,7 +6,7 @@ author 'Carvalho'
 description 'ARCADIA ANIMATIONS'
 version '1.0.0'
 
-shared_scripts {'lib/imports.lua'}
+shared_scripts {'@ARCADIACORE/lib/imports.lua'}
 
 -- What to run
 client_script {'client.lua','@ARCADIACORE/lib/functions.lua','ui/nui.lua','bancos.lua'}

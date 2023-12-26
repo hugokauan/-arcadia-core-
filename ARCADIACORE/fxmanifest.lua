@@ -25,7 +25,7 @@ server_scripts {
 
 files {
     'lib/imports.lua',
-    'config.lua'
+    --'config.lua'
 }
 
 
