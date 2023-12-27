@@ -134,7 +134,7 @@ AddEventHandler('arcadia:serversetspawnpos', function()
 end)
 
 
-pOutfit = nil 
+--[[pOutfit = nil 
 RegisterNetEvent('receive:outfit')
 AddEventHandler('receive:outfit', function(outfit)
     pOutfit = outfit
@@ -148,6 +148,29 @@ AddEventHandler('arcadia_server:saveoutfit', function()
             print(affectedRows)
         end
     end)
+end)]]
+RegisterNetEvent('arcadia_server:savePlayerClothes')
+AddEventHandler('arcadia_server:savePlayerClothes',function()
+    local id = ARCADIA.getPlayerId(source)
+    local response = MySQL.prepare.await('SELECT id FROM players_clothing WHERE id = ?', {id})
+    if response ~= nil then
+        MySQL.Async.execute('UPDATE players_clothing SET mascara = ? WHERE id = ? ', {coords,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+    else
+        MySQL.insert('INSERT INTO players_clothing (steamid, discordid, ip) VALUES (?, ?, ?) ', {steamid, discordid, ip}, function(id)
+        end)
+    end
+end)
+
+RegisterNetEvent('arcadia_server:savePlayerTextures')
+AddEventHandler('arcadia_server:savePlayerTextures',function()
+end)
+
+RegisterNetEvent('arcadia_server:savePlayerProps')
+AddEventHandler('arcadia_server:savePlayerProps',function()
 end)
 
 
@@ -159,7 +182,7 @@ AddEventHandler('playerDropped', function(reason)
     local id = ARCADIA.getPlayerId(playerSrc)
     local playerCoords = table.pack(x,y,z)
     print("antes de salvar")
-    TriggerEvent('arcadia_client:saveoutfit',playerSrc)
+    --TriggerEvent('arcadia_client:saveoutfit',playerSrc)
     TriggerEvent('arcadia:updateplayerpos',playerCoords,id) 
     print("informações salvas ", playerSrc)
 end)

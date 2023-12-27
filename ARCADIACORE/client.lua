@@ -25,11 +25,18 @@ AddEventHandler('arcadia:setspawnpos', function(x,y,z)
     SetPedHairColor(playerPed, 20, 23)
 end)
 
-RegisterNetEvent('arcadia_client:saveoutfit')
+--[[RegisterNetEvent('arcadia_client:saveoutfit')
 AddEventHandler('arcadia_client:saveoutfit', function ()
     local outfit = ARCADIA.getOutfit()
     TriggerServerEvent('arcadia_server:saveoutfit', outfit)
 end)
+]]
+
+RegisterNetEvent('arcadia_client:savePlayerOutfit')
+AddEventHandler('arcadia_client:savePlayerOutfit',function()
+    local clothes,textures,props = ARCADIA.getPlayerClothes()
+end)
+
 
 --[[RegisterCommand('tpcds', function(source,args,raw)
     local x,y,z = tonumber(args[1]),tonumber(args[2]),tonumber(args[3])
@@ -54,7 +61,7 @@ Citizen.CreateThread(function()
         local idle = minuto
         while true do
             local outfit = ARCADIA.getOutfit()
-            TriggerServerEvent('receive:outfit', outfit)
+            --TriggerServerEvent('receive:outfit', outfit)
             Citizen.Wait(idle)
         end
 end)

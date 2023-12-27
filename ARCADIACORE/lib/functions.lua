@@ -368,6 +368,21 @@ function ARCADIA.getOutfit()
     return savedOutfit
 end
 
+function ARCADIA.getPlayerClothes()
+    local playerPed = PlayerPedId()
+    local clothes = {}
+    local textures = {}
+    local props = {}
+
+    for i = 0, 12 do
+        clothes[i] = GetPedDrawableVariation(playerPed, i)
+        textures[i] = GetPedTextureVariation(playerPed, i)
+        props[i] = GetPedPropIndex(playerPed, i)
+    end
+
+    return clothes, textures, props
+end
+
 ----------
 
 
