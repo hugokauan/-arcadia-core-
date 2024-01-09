@@ -17,5 +17,7 @@ config = {
             ['espingarda'] = {'WEAPON_SAWNOFFSHOTGUN',40},
             ['rifle_m4'] = {'WEAPON_CARBINERIFLE',300}
         }
-    }
+    },
+
+    
 }

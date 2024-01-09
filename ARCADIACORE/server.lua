@@ -150,18 +150,80 @@ AddEventHandler('arcadia_server:saveoutfit', function()
     end)
 end)]]
 RegisterNetEvent('arcadia_server:savePlayerClothes')
-AddEventHandler('arcadia_server:savePlayerClothes',function()
+AddEventHandler('arcadia_server:savePlayerClothes',function(mascara,cabelo,maos,calcas,mochilas,sapatos,acessorios,rasgos,colete,decals,camisetas)
     local id = ARCADIA.getPlayerId(source)
     local response = MySQL.prepare.await('SELECT id FROM players_clothing WHERE id = ?', {id})
     if response ~= nil then
-        MySQL.Async.execute('UPDATE players_clothing SET mascara = ? WHERE id = ? ', {coords,id}, function(affectedRows)
+        -- MASCARA
+        MySQL.Async.execute('UPDATE players_clothing SET mascara = ? WHERE id = ? ', {mascara,id}, function(affectedRows)
             if affectedRows then
                 --print(affectedRows)
             end
         end)
-    else
-        MySQL.insert('INSERT INTO players_clothing (steamid, discordid, ip) VALUES (?, ?, ?) ', {steamid, discordid, ip}, function(id)
+        -- CABELO
+        MySQL.Async.execute('UPDATE players_clothing SET cabelo = ? WHERE id = ? ', {cabelo,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
         end)
+        -- MAOS
+        MySQL.Async.execute('UPDATE players_clothing SET maos = ? WHERE id = ? ', {maos,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- CALCAS
+        MySQL.Async.execute('UPDATE players_clothing SET calcas = ? WHERE id = ? ', {calcas,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- MOCHILAS
+        MySQL.Async.execute('UPDATE players_clothing SET mochilas = ? WHERE id = ? ', {mochilas,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- SAPATOS
+        MySQL.Async.execute('UPDATE players_clothing SET sapatos = ? WHERE id = ? ', {sapatos,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- ACESSORIOS
+        MySQL.Async.execute('UPDATE players_clothing SET acessorios = ? WHERE id = ? ', {acessorios,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- RASGOS
+        MySQL.Async.execute('UPDATE players_clothing SET camisetabug = ? WHERE id = ? ', {rasgos,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- COLETE
+        MySQL.Async.execute('UPDATE players_clothing SET coletes = ? WHERE id = ? ', {colete,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        -- DECALS
+        MySQL.Async.execute('UPDATE players_clothing SET decals = ? WHERE id = ? ', {decals,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        MySQL.Async.execute('UPDATE players_clothing SET camiseta = ? WHERE id = ? ', {camisetas,id}, function(affectedRows)
+            if affectedRows then
+                --print(affectedRows)
+            end
+        end)
+        print("UPDATED ROUPAS")
+    else
+        MySQL.Async.insert('INSERT INTO players_clothing (id) VALUES (?) ', {id}, function(id)
+        end)
+        print("CREATED ROUPAS")
     end
 end)
 
@@ -173,6 +235,16 @@ RegisterNetEvent('arcadia_server:savePlayerProps')
 AddEventHandler('arcadia_server:savePlayerProps',function()
 end)
 
+RegisterNetEvent('arcadia_server:setPlayerClothing')
+AddEventHandler('arcadia_server:setPlayerClothing', function()
+    local clothes = MySQL.Async.fetchAll('SELECT * FROM players_data WHERE id = ?', {id})
+    if clothes then
+        for i = 1, #clothes do
+            local roupas = clothes[i]
+            print(roupas.camiseta)
+        end
+    end
+end)
 
 AddEventHandler('playerDropped', function(reason) 
     local playerSrc = source
