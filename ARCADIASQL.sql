@@ -36,26 +36,26 @@ CREATE TABLE IF NOT EXISTS `players` (
 CREATE TABLE IF NOT EXISTS `players_clothing` (
   `id` int(11) DEFAULT NULL,
   `mascara` int(11) DEFAULT NULL,
-  `mascara_textura` int(11) DEFAULT NULL,
+  `mascara_textura` int(11) DEFAULT 0,
   `cabelo` int(11) DEFAULT NULL,
-  `cabelo_textura` int(11) DEFAULT NULL,
+  `cabelo_textura` int(11) DEFAULT 0,
   `maos` int(11) DEFAULT NULL,
   `calcas` int(11) DEFAULT NULL,
-  `calcas_textura` int(11) DEFAULT NULL,
+  `calcas_textura` int(11) DEFAULT 0,
   `mochilas` int(11) DEFAULT NULL,
-  `mochilas_textura` int(11) DEFAULT NULL,
+  `mochilas_textura` int(11) DEFAULT 0,
   `sapatos` int(11) DEFAULT NULL,
-  `sapatos_textura` int(11) DEFAULT NULL,
+  `sapatos_textura` int(11) DEFAULT 0,
   `acessorios` int(11) DEFAULT NULL,
-  `acessorios_textura` int(11) DEFAULT NULL,
+  `acessorios_textura` int(11) DEFAULT 0,
   `camisetabug` int(11) DEFAULT NULL,
-  `camisetabug_textura` int(11) DEFAULT NULL,
+  `camisetabug_textura` int(11) DEFAULT 0,
   `coletes` int(11) DEFAULT NULL,
-  `coletes_textura` int(11) DEFAULT NULL,
+  `coletes_textura` int(11) DEFAULT 0,
   `decals` int(11) DEFAULT NULL,
-  `decals_textura` int(11) DEFAULT NULL,
+  `decals_textura` int(11) DEFAULT 0,
   `camiseta` int(11) DEFAULT NULL,
-  `camiseta_textura` int(11) DEFAULT NULL
+  `camiseta_textura` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Exportação de dados foi desmarcado.
@@ -63,6 +63,10 @@ CREATE TABLE IF NOT EXISTS `players_clothing` (
 -- Copiando estrutura para tabela cyberarcadia.players_data
 CREATE TABLE IF NOT EXISTS `players_data` (
   `id` int(11) DEFAULT NULL,
+  `Nome` varchar(50) DEFAULT 'Índividuo',
+  `Sobrenome` varchar(50) DEFAULT 'Indigente',
+  `Idade` int(11) DEFAULT 18,
+  `sexo` varchar(50) DEFAULT NULL,
   `grupo` varchar(50) DEFAULT NULL,
   `organizacao` varchar(50) DEFAULT NULL,
   `lastposition` varchar(500) DEFAULT NULL,
