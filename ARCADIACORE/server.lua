@@ -237,11 +237,25 @@ end)
 
 RegisterNetEvent('arcadia_server:setPlayerClothing')
 AddEventHandler('arcadia_server:setPlayerClothing', function()
-    local clothes = MySQL.Async.fetchAll('SELECT * FROM players_data WHERE id = ?', {id})
+    local id = ARCADIA.getPlayerId(source)
+    --print("id " , id)
+    local clothes = MySQL.query.await('SELECT mascara,camiseta FROM players_clothing WHERE id = ?', {id})
+    --print(#clothes)
     if clothes then
         for i = 1, #clothes do
             local roupas = clothes[i]
-            print(roupas.camiseta)
+            --print(clothes[i])
+            --print(roupas.camiseta)
+            print("1 ", roupas.camiseta)
+            print("2 ", roupas.mascara)
+            if roupas.mascara then
+                print("3")
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 1, roupas.mascara)
+            end
+            if roupas.camiseta then
+                print("4")
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 11, roupas.camiseta)
+            end
         end
     end
 end)

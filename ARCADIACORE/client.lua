@@ -1,8 +1,9 @@
 local playerSpawned = false
 
 AddEventHandler('playerSpawned', function()
-    Citizen.Wait(1000)
+    Citizen.Wait(2000)
     TriggerServerEvent('arcadia:serversetspawnpos')
+    TriggerServerEvent('arcadia_server:setPlayerClothing')
     playerSpawned = true
     Citizen.Wait(1)
 end)
@@ -11,9 +12,7 @@ end)
 RegisterNetEvent('arcadia:setspawnpos')
 AddEventHandler('arcadia:setspawnpos', function(x,y,z,clothing)
     SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false)
-    ARCADIA.setPlayerModel('mp_f_freemode_01')
-    local playerPed = PlayerPedId()
-    SetPedComponentVariation(playerPed, 2, 10, 1, 0)
+    --[[SetPedComponentVariation(playerPed, 2, 10, 1, 0)
     SetPedComponentVariation(playerPed, 3, 4, 0, 0)
     SetPedComponentVariation(playerPed, 4, 88, 0, 0)
     SetPedComponentVariation(playerPed, 8, 14, 0, 0)
@@ -22,7 +21,7 @@ AddEventHandler('arcadia:setspawnpos', function(x,y,z,clothing)
     SetPedHeadBlendData(playerPed, 0, 0, 0, 0, 0, 0, 0, 0, 0, false)
     SetPedFaceFeature(playerPed, 13, -1.0)
     SetPedFaceFeature(playerPed, 14, -1.0)
-    SetPedHairColor(playerPed, 20, 23)
+    SetPedHairColor(playerPed, 20, 23)]]
 end)
 
 --[[RegisterNetEvent('arcadia_client:saveoutfit')
@@ -60,14 +59,24 @@ AddEventHandler('arcadia_client:savePlayerOutfit',function()
     TriggerServerEvent('arcadia_server:savePlayerClothes', mascara,cabelo,maos,calcas,mochilas,sapatos,acessorios,rasgos,colete,decals,camisetas)
 end)
 
-Citizen.CreateThread(function()
+RegisterNetEvent('arcadia_client:setPlayerClothing')
+AddEventHandler('arcadia_client:setPlayerClothing', function(tipo,roupa)
+    local roupa = roupa
+    local tipo = tipo
+    ARCADIA.setPlayerModel('mp_f_freemode_01')
+    local playerPed = PlayerPedId()
+    print("evento executado")
+    print(tipo,roupa)
+    SetPedComponentVariation(playerPed, tipo, roupa, 0, 0)
+end)
+
+--[[Citizen.CreateThread(function()
     while true do
         Citizen.Wait(15000)
         print("update")
         TriggerEvent('arcadia_client:savePlayerOutfit')
-        TriggerServerEvent('arcadia_server:setPlayerClothing')
     end
-end)
+end)]]
 
 
 --[[RegisterCommand('tpcds', function(source,args,raw)
@@ -87,7 +96,7 @@ end)
 RegisterCommand('setmodel', function(source,args) setPlayerModel(args[1]) end)
 
 
-Citizen.CreateThread(function()
+--[[Citizen.CreateThread(function()
         local segundo = 1000*60
         local minuto = segundo * 1
         local idle = minuto
@@ -96,6 +105,6 @@ Citizen.CreateThread(function()
             --TriggerServerEvent('receive:outfit', outfit)
             Citizen.Wait(idle)
         end
-end)
+end)]]
 
 
