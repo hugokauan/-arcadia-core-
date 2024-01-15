@@ -119,25 +119,6 @@ function ARCADIA.GetSource(identifier)
     end
     return 0
 end
-
-
-
---[[function ARCADIA.GetPlayerSource(steamId)
-    local players = {}
-    local players = GetAllPlayers()
-    for _, playerId in ipairs(players) do
-        local identifiers = GetPlayerIdentifiers(playerId)
-
-        for _, identifier in ipairs(identifiers) do
-            if string.find(identifier, "steam:") and string.sub(identifier, 7) == steamId then
-                return playerId
-            end
-        end
-    end
-
-    return 0
-end]] --COMENTADO POIS NÃO FUNCIONA
-
 ---------------------------------------------------- ARCADIA GROUPS ------------------------------------------------
 
 
@@ -306,31 +287,6 @@ function ARCADIA.isPlayerWl(source)
 end
 
 function ARCADIA.teleportWay()
-    --[[local ped = PlayerPedId()
-    local blip = GetFirstBlipInfoId(8)
-    print("função trigada")]]
-    --[[if ped then
-        print("ped encontrado")
-        if blip then
-            print("waypoint existe")
-            local coords = GetBlipInfoIdCoord(blip)
-            print(coords)
-            local x,y,z = table.unpack(coords)
-            local isGrounded,groundZ
-            for i = 0, 1000,1 do
-                Citizen.Wait(5)
-                print(x,y,z, groundZ,i)
-                if GetGroundZFor_3dCoord(x, y, ToFloat(i), false) then
-                    print("ground found")
-                    z = ToFloat(i)
-                    print(z)
-                    SetEntityCoords(ped, x, y, z, 0, 0, 0, false)
-                    break
-                end
-                print("teleportado")
-            end
-        end
-    end]]
     local waypointBlip = GetFirstBlipInfoId(GetWaypointBlipEnumId())
 	local blipPos = GetBlipInfoIdCoord(waypointBlip) -- GetGpsWaypointRouteEnd(false, 0, 0)
 
@@ -456,17 +412,13 @@ function ARCADIA.getCars(id)
     local cars
     local c
     cars = MySQL.prepare.await('SELECT veiculo FROM player_vehicles WHERE id = ?', {pId})
-        --print(cars)
-            for i=1, #cars do
-                local car = cars[i]
-                --print(car)
-                for k,v in pairs(car) do
-                    --print(v)
-                    c = v
-                    return car
-                end
-            end
-            --print("^2[ARCADIACORE]^3(AVISO) Você não inseriu o player id na função")
+    for i=1, #cars do
+        local car = cars[i]
+        for k,v in pairs(car) do
+            c = v
+            return car
+        end
+    end
 end
 
 function ARCADIA.isJob(source,job)
@@ -480,6 +432,17 @@ function ARCADIA.isJob(source,job)
     end
 end
 
+function ARCADIA.getPlayerJob(source)
+    local playerJob
+    local id = ARCADIA.getPlayerId(source)
+    playerJob = MySQL.prepare.await('SELECT trabalho FROM players_data WHERE id = ?', {id})
+    if playerJob then
+        return tostring(playerJob)
+    else
+        return "SEM TRABALHO"
+    end
+end
+
 function ARCADIA.isCargo(source, cargo)
     local playerCargo
     local id = ARCADIA.getPlayerId(source)
@@ -488,5 +451,16 @@ function ARCADIA.isCargo(source, cargo)
 	    return true
     else
         return false
+    end
+end
+
+function ARCADIA.getPlayerCargo(source)
+    local playerCargo
+    local id = ARCADIA.getPlayerId(source)
+    playerCargo = MySQL.prepare.await('SELECT cargo FROM players_data WHERE id = ?', {id})
+    if playerCargo then
+        return tostring(playerCargo)
+    else
+        return "SEM CARGO"
     end
 end

@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital@1&display=swap');
+
+*{
+    font-family: 'Kanit', sans-serif;
+    font-size: 18px;
+}
+
+.Top{
+    background-color: white;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 15%;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    text-align: center;
+    font-family: 'lemon', serif !important;
+    font-size: 30px;
+}
+.Top #text{
+    
+}
+
+
+.id {
+    display: none;
+    position: absolute;
+    background-color: black;
+    height: 45%;
+    width: 18%;
+    top: 40%;
+    left: 75%;
+    border-radius: 10px;
+}
+
+.id #passaporte{
+    color: white;
+    position: absolute;
+    top: 25%;
+    left: 5%;
+}
+.id #nome{
+    color: white;
+    position: absolute;
+    top: 35%;
+    left: 5%;
+}
+.id #sobrenome{
+    color: white;
+    position: absolute;
+    top: 45%;
+    left: 5%;
+}
+.id #job{
+    color: white;
+    position: absolute;
+    top: 55%;
+    left: 5%;
+}
+.id #cargo{
+    color: white;
+    position: absolute;
+    top: 65%;
+    left: 5%;
+}

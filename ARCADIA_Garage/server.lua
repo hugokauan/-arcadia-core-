@@ -1,11 +1,3 @@
---[[Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1000)
-        ARCADIA.getCars(1)
-    end
-end)]]
-
-
 RegisterNetEvent('arcadia:getCars')
 AddEventHandler('arcadia:getCars', function()
     local source = source

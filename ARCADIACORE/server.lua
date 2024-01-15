@@ -103,8 +103,6 @@ AddEventHandler('arcadia:updateplayerpos',function(pcoords,id)
     local playerSrc = source
     local x,y,z = table.unpack(pcoords)
     local packedCoords = table.pack(x,y,z)
-    --local ids = GetPlayerIdentifiers(playerSrc)
-    --local id = getPlayerId(playerSrc)
     local coords = table.concat(packedCoords, ",")
     MySQL.Async.execute('UPDATE players_data SET lastposition = ? WHERE id = ? ', {coords,id}, function(affectedRows)
         if affectedRows then
@@ -133,22 +131,6 @@ AddEventHandler('arcadia:serversetspawnpos', function()
     end
 end)
 
-
---[[pOutfit = nil 
-RegisterNetEvent('receive:outfit')
-AddEventHandler('receive:outfit', function(outfit)
-    pOutfit = outfit
-end)
-
-RegisterNetEvent('arcadia_server:saveoutfit')
-AddEventHandler('arcadia_server:saveoutfit', function()
-    local id = ARCADIA.getPlayerId(source)
-    MySQL.Async.execute('UPDATE players_data SET outfit = ? WHERE id = ? ', {pOutfit,id}, function(affectedRows)
-        if affectedRows then
-            print(affectedRows)
-        end
-    end)
-end)]]
 RegisterNetEvent('arcadia_server:savePlayerClothes')
 AddEventHandler('arcadia_server:savePlayerClothes',function(mascara,cabelo,maos,calcas,mochilas,sapatos,acessorios,rasgos,colete,decals,camisetas)
     local id = ARCADIA.getPlayerId(source)
@@ -219,11 +201,9 @@ AddEventHandler('arcadia_server:savePlayerClothes',function(mascara,cabelo,maos,
                 --print(affectedRows)
             end
         end)
-        print("UPDATED ROUPAS")
     else
         MySQL.Async.insert('INSERT INTO players_clothing (id) VALUES (?) ', {id}, function(id)
         end)
-        print("CREATED ROUPAS")
     end
 end)
 
@@ -238,23 +218,53 @@ end)
 RegisterNetEvent('arcadia_server:setPlayerClothing')
 AddEventHandler('arcadia_server:setPlayerClothing', function()
     local id = ARCADIA.getPlayerId(source)
-    --print("id " , id)
-    local clothes = MySQL.query.await('SELECT mascara,camiseta FROM players_clothing WHERE id = ?', {id})
-    --print(#clothes)
+    local clothes = MySQL.query.await('SELECT mascara,cabelo,maos,calcas,mochilas,sapatos,acessorios,camisetabug,coletes,decals,camiseta FROM players_clothing WHERE id = ?', {id})
     if clothes then
         for i = 1, #clothes do
             local roupas = clothes[i]
-            --print(clothes[i])
-            --print(roupas.camiseta)
-            print("1 ", roupas.camiseta)
-            print("2 ", roupas.mascara)
             if roupas.mascara then
-                print("3")
                 TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 1, roupas.mascara)
+                Citizen.Wait(5)
+            end
+            if roupas.cabelo then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 2, roupas.cabelo)
+                Citizen.Wait(5)
+            end
+            if roupas.maos then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 3, roupas.maos)
+                Citizen.Wait(5)
+            end
+            if roupas.calcas then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 4, roupas.calcas)
+                Citizen.Wait(5)
+            end
+            if roupas.mochilas then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 5, roupas.mochilas)
+                Citizen.Wait(5)
+            end
+            if roupas.sapatos then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 6, roupas.sapatos)
+                Citizen.Wait(5)
+            end
+            if roupas.acessorios then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 7, roupas.acessorios)
+                Citizen.Wait(5)
+            end
+            if roupas.camisetabug then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 8, roupas.camisetabug)
+                Citizen.Wait(5)
+            end
+            if roupas.coletes then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 9, roupas.coletes)
+                Citizen.Wait(5)
+            end
+            if roupas.decals then
+                TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 10, roupas.decals)
+                Citizen.Wait(5)
             end
             if roupas.camiseta then
-                print("4")
                 TriggerClientEvent('arcadia_client:setPlayerClothing', -1, 11, roupas.camiseta)
+                Citizen.Wait(5)
             end
         end
     end
@@ -268,7 +278,6 @@ AddEventHandler('playerDropped', function(reason)
     local id = ARCADIA.getPlayerId(playerSrc)
     local playerCoords = table.pack(x,y,z)
     print("antes de salvar")
-    --TriggerEvent('arcadia_client:saveoutfit',playerSrc)
     TriggerEvent('arcadia:updateplayerpos',playerCoords,id) 
     print("informações salvas ", playerSrc)
 end)

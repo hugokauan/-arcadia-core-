@@ -159,35 +159,3 @@ RegisterCommand('tpway', function(source,args)
         print("sem permissão")
     end
 end)
-
---[[
-RegisterCommand('testarsteamid', function(source,args)
-    local id = tonumber(args[1])
-    print(ARCADIA.getSteamIdFromId(id))
-end, false)
-
-RegisterCommand('testarsource', function(source,args)
-    local id = tonumber(args[1])
-    local sID = ARCADIA.getSteamIdFromId(id)
-    print(sID)
-    local sourceplayer = ARCADIA.GetSource(sID)
-    print("id " ..id)
-    --print(sID)
-    print("args " .. args[1])
-    print("source do comando: " .. source)
-    print("source id: " .. sourceplayer)
-end)]]
-
-
---[[RegisterCommand('testeban', function(source,args)
-    local playerSrc = source
-    local fArg = tonumber(args[1])
-    local sId = ARCADIA.getSteamIdFromId(fArg)
-    if ARCADIA.hasPermission(playerSrc,'admin.permission') then
-        ARCADIA.banPlayer(fArg)
-        DropPlayer(player, "Banido")
-    else
-        print("Não tem permissão")
-    end
-end)]]
-
