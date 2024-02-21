@@ -15,15 +15,15 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
     deferrals.update(string.format( "Seja bem-vindo a rede de servidores NBC,Aguarde enquanto seu SteamID é checado",playerName))
 
     for k,v in pairs(identifiers) do
-        if string.match(v, 'steam:') then 
+        if string.match(v, 'steam:') then
             steamid = v
-        elseif string.match(v,'license:') then 
+        elseif string.match(v,'license:') then
             licenseid = v
-        elseif string.match(v,'xbl:') then 
+        elseif string.match(v,'xbl:') then
             xboxliveid = v
-        elseif string.match(v,'fivem:') then 
+        elseif string.match(v,'fivem:') then
             fivemid = v
-        elseif string.match(v,'discord:') then 
+        elseif string.match(v,'discord:') then
             discordid = v
         elseif string.match(v,'ip:') then
             ip = v
@@ -74,7 +74,7 @@ AddEventHandler('playerConnecting', function(playerName,setKickReason,deferrals)
                 deferrals.done("Você Está Banido")
             end
         else
-            deferrals.done("Você Não Está Listado Na Whitelist")
+            deferrals.done("Você Não Está Listado Na Whitelist, Envie seu id em nosso discord: discord.gg/cyber-arcadia" .. id)
         end
     end
 end)

@@ -1,5 +1,9 @@
 {
     "Lua.diagnostics.disable": [
-        "empty-block"
+        "empty-block",
+        "undefined-global"
+    ],
+    "Lua.diagnostics.globals": [
+        "RegisterNetEvent"
     ]
 }

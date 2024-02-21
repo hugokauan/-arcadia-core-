@@ -66,8 +66,6 @@ AddEventHandler('arcadia_client:setPlayerClothing', function(tipo,roupa)
     local roupa = roupa
     local tipo = tipo
     local playerPed = PlayerPedId()
-    print("evento executado")
-    print(tipo,roupa)
     SetPedComponentVariation(playerPed, tipo, roupa, 0, 0)
     Citizen.Wait(600)
     SetEntityVisible(PlayerPedId(), true, 0)
