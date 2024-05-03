@@ -17,7 +17,6 @@ AddEventHandler('arcadia:setspawnpos', function(x,y,z,clothing)
     SetEntityVisible(PlayerPedId(), false, 0)
 end)
 
-
 RegisterNetEvent('arcadia_client:savePlayerOutfit')
 AddEventHandler('arcadia_client:savePlayerOutfit',function()
     local clothes,textures,props = ARCADIA.getPlayerClothes()

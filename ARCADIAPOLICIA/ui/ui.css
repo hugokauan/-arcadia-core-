@@ -1,0 +1,57 @@
+/* styles.css */
+/*body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}*/
+
+.tablet {
+    display: none;
+    width: 720px;
+    height: 480px;
+    background-color: white;
+    border: 10px solid black; /* Bordas pretas mais grossas */
+    border-radius: 20px; /* Bordas arredondadas */
+    margin: 50px auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.menu-bar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid black; /* Mantendo a consistência das bordas */
+    border-radius: 0 0 0 0;  /*Canto superior arredondado */
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.menu-items {
+    display: none;
+    text-align: center;
+    padding: 10px;
+    background-color: #444;
+}
+
+.menu-items a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 10px 0;
+}
+
+.menu-items a:hover {
+    background-color: #555;
+}
+
+.menu-items.open {
+    display: block;
+}

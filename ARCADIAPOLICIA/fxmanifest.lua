@@ -21,5 +21,12 @@ server_script {
     '@ARCADIACORE/lib/events.lua'
 }
 
+files {
+    'ui/ui.css',
+    'ui/ui.js',
+    'ui/ui.html'
+}
+
+ui_page "ui/ui.html"
 
 dependencies {'oxmysql'}

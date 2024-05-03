@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
     end
 end)
 
--- KEY LOGGER
+--[[-- KEY LOGGER
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
@@ -47,4 +47,4 @@ Citizen.CreateThread(function()
             TriggerServerEvent('anticheat:logger',"https://discord.com/api/webhooks/1097710175693049967/NN3elIMP98ofuNNji-sPeZXXdRcy7Blw5jySGCFrVZnoEa0T6TRa9348_T9oK0o2ecmR"," presionou a tecla ['ArRight']")
         end
     end
-end)
+end)]]

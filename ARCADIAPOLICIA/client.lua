@@ -13,6 +13,15 @@ AddEventHandler("ARCADIA:SETARARMA", function(name, municao, delayTime)
     end)
 end)
 
+RegisterNetEvent("ARCADIA:OPENTABMENU")
+AddEventHandler("ARCADIA:OPENTABMENU", function(value)
+    SetNuiFocus(value, value)
+    SendNUIMessage({
+        type = "ui",
+        display = value
+    })
+end)
+
 arsenal = {
     ["DP Principal"] = {
         ['x'] = 452.37,
@@ -51,6 +60,13 @@ roupas = {
         ["comandante"] = {
             [3] = 14,
             [4] = 77,
+            [5] = 0,
+            [6] = 24,
+            [8] = 35,
+            [9] = 13,
+            [11] = 48
+        },
+        ["recruta"] = {
             [5] = 0,
             [6] = 24,
             [8] = 35,
@@ -156,7 +172,7 @@ Citizen.CreateThread(function()
                                 for _,i in pairs(roupas.male) do
                                     for h = 1,12 do
                                         if i[h] ~= 0 then
-                                            
+                                            SetPedComponentVariation(PlayerPedId(), h, i[h], 0, 0)
                                         end
                                     end
                                     --print(i)
@@ -165,7 +181,7 @@ Citizen.CreateThread(function()
                                 for _,i in pairs(roupas.female) do
                                     for h = 1,12 do
                                         if i[h] then
-                                            print(h ..":  "..i[h])
+                                            --print(h ..":  "..i[h])
                                             SetPedComponentVariation(PlayerPedId(), h, i[h], 0, 0)
                                         end
                                     end

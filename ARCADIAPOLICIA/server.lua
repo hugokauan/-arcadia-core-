@@ -29,5 +29,23 @@ AddEventHandler('ARCADIA:SETARMAS', function()
     end
 end)
 
+local isArsenalAberto = false
+
+RegisterCommand("arsenalmenu", function(source,args)
+    isArsenalAberto = isArsenalAberto
+    print("1")
+    if ARCADIA.isJob(source, "policia") then
+        print("2")
+        if isArsenalAberto then
+            print("T")
+            isArsenalAberto = false
+        else
+            print("F")
+            isArsenalAberto = true
+        end
+        TriggerClientEvent("ARCADIA:OPENTABMENU", -1, isArsenalAberto)
+        print("ET")
+    end
+end)
 
 --TriggerClientEvent('ARCADIA:SETARARMA', source, 'ARMA_DESEJADA', MUNICOES, DELAY)
