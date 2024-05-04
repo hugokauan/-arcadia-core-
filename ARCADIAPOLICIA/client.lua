@@ -22,6 +22,16 @@ AddEventHandler("ARCADIA:OPENTABMENU", function(value)
     })
 end)
 
+RegisterNUICallback('ARCADIA:entregarArmas', function(data)
+    local choiceKit = data.itemName
+    TriggerServerEvent('ARCADIA_SERVER:SETGUNS', choiceKit)
+    print(choiceKit)
+end)
+RegisterNUICallback('ARCADIA:SAIR', function(data)
+    SetNuiFocus(false, false)
+    TriggerServerEvent('ARCADIA:ISARSENALABERTO', false)
+end)
+
 arsenal = {
     ["DP Principal"] = {
         ['x'] = 452.37,
@@ -96,7 +106,7 @@ Citizen.CreateThread(function()
             if distancia <= 5 then
                 DrawMarker(23, v.x, v.y, v.z-0.98, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 0, 0, 255, false, false, 0, false, nil, nil, 0)
                 if IsControlJustReleased(0, 46) then
-                    TriggerServerEvent('ARCADIA:SETARMAS')
+                    TriggerServerEvent('ARCADIA:TRIGGERARSENALMENU')
                 end
                 idle = 0
             else

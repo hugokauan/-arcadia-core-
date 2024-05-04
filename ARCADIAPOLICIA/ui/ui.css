@@ -55,3 +55,55 @@
 .menu-items.open {
     display: block;
 }
+
+.store {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.store-item {
+    width: 100px;
+    height: 100px;
+    background-color: #eee;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none; /* Remove underline */
+    color: black; /* Texto preto para contraste */
+}
+
+.store-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.store-item p {
+    margin: 5px 0;
+}
+
+.store-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Efeito de destaque ao passar o mouse */
+}
+
+.bottom-bar {
+    text-align: center; /* Centraliza o botão */
+    padding: 10px; /* Espaço para o botão */
+}
+
+#action-button {
+    background-color: #333; /* Cor do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remover bordas */
+    padding: 10px 20px; /* Espaço interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    cursor: pointer; /* Alterar cursor ao passar por cima */
+}
+
+#action-button:hover {
+    background-color: #555; /* Cor ao passar o mouse */
+}

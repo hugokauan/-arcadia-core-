@@ -29,12 +29,36 @@ AddEventHandler('ARCADIA:SETARMAS', function()
     end
 end)
 
+RegisterNetEvent('ARCADIA_SERVER:SETGUNS')
+AddEventHandler('ARCADIA_SERVER:SETGUNS', function (kit)
+    local choiceKit = kit
+    if choiceKit == "Kit-Soldado" then
+        if ARCADIA.isCargo(source, 'soldado' or 'sargento' or 'tenente' or 'cabo' or 'comandante') then
+            for k,v in pairs(config.policia.soldado) do
+                print(v[1],v[2])
+                TriggerClientEvent('ARCADIA:SETARARMA', -1, v[1], v[2], 10)
+            end
+        end
+    elseif choiceKit == "Kit-Sargento" then
+    elseif choiceKit == "Kit-Tenente" then
+    elseif choiceKit == "Kit-Comandante" then
+        if ARCADIA.isCargo(source, 'comandante') then
+            for k,v in pairs(config.policia.comandante) do
+                print(v[1],v[2])
+                TriggerClientEvent('ARCADIA:SETARARMA', -1, v[1], v[2], 10)
+            end
+        end
+    end
+end)
+
 local isArsenalAberto = false
 
-RegisterCommand("arsenalmenu", function(source,args)
+RegisterNetEvent('ARCADIA:TRIGGERARSENALMENU')
+AddEventHandler('ARCADIA:TRIGGERARSENALMENU', function ()
+    src = source
     isArsenalAberto = isArsenalAberto
     print("1")
-    if ARCADIA.isJob(source, "policia") then
+    if ARCADIA.isJob(src, "policia") then
         print("2")
         if isArsenalAberto then
             print("T")
@@ -46,6 +70,11 @@ RegisterCommand("arsenalmenu", function(source,args)
         TriggerClientEvent("ARCADIA:OPENTABMENU", -1, isArsenalAberto)
         print("ET")
     end
+end)
+
+RegisterNetEvent('ARCADIA:ISARSENALABERTO')
+AddEventHandler('ARCADIA:ISARSENALABERTO', function (isAberto)
+    isArsenalAberto = isAberto
 end)
 
 --TriggerClientEvent('ARCADIA:SETARARMA', source, 'ARMA_DESEJADA', MUNICOES, DELAY)
