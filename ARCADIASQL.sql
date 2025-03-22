@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.32-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           9.1.0 - MySQL Community Server - GPL
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.6.0.6765
+-- HeidiSQL Versão:              12.10.0.7000
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,17 +16,17 @@
 
 
 -- Copiando estrutura do banco de dados para cyberarcadia
-CREATE DATABASE IF NOT EXISTS `cyberarcadia` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE IF NOT EXISTS `cyberarcadia` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `cyberarcadia`;
 
 -- Copiando estrutura para tabela cyberarcadia.players
 CREATE TABLE IF NOT EXISTS `players` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `steamid` varchar(200) DEFAULT NULL,
-  `discordid` varchar(200) DEFAULT NULL,
-  `ip` varchar(50) DEFAULT NULL,
-  `banned` int(11) DEFAULT 0,
-  `whitelist` int(11) DEFAULT 0,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `steamid` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `discordid` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ip` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `banned` int DEFAULT '0',
+  `whitelist` int DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -34,63 +34,63 @@ CREATE TABLE IF NOT EXISTS `players` (
 
 -- Copiando estrutura para tabela cyberarcadia.players_clothing
 CREATE TABLE IF NOT EXISTS `players_clothing` (
-  `id` int(11) DEFAULT NULL,
-  `mascara` int(11) DEFAULT NULL,
-  `mascara_textura` int(11) DEFAULT 0,
-  `cabelo` int(11) DEFAULT NULL,
-  `cabelo_textura` int(11) DEFAULT 0,
-  `maos` int(11) DEFAULT NULL,
-  `calcas` int(11) DEFAULT NULL,
-  `calcas_textura` int(11) DEFAULT 0,
-  `mochilas` int(11) DEFAULT NULL,
-  `mochilas_textura` int(11) DEFAULT 0,
-  `sapatos` int(11) DEFAULT NULL,
-  `sapatos_textura` int(11) DEFAULT 0,
-  `acessorios` int(11) DEFAULT NULL,
-  `acessorios_textura` int(11) DEFAULT 0,
-  `camisetabug` int(11) DEFAULT NULL,
-  `camisetabug_textura` int(11) DEFAULT 0,
-  `coletes` int(11) DEFAULT NULL,
-  `coletes_textura` int(11) DEFAULT 0,
-  `decals` int(11) DEFAULT NULL,
-  `decals_textura` int(11) DEFAULT 0,
-  `camiseta` int(11) DEFAULT NULL,
-  `camiseta_textura` int(11) DEFAULT 0
+  `id` int DEFAULT NULL,
+  `mascara` int DEFAULT NULL,
+  `mascara_textura` int DEFAULT '0',
+  `cabelo` int DEFAULT NULL,
+  `cabelo_textura` int DEFAULT '0',
+  `maos` int DEFAULT NULL,
+  `calcas` int DEFAULT NULL,
+  `calcas_textura` int DEFAULT '0',
+  `mochilas` int DEFAULT NULL,
+  `mochilas_textura` int DEFAULT '0',
+  `sapatos` int DEFAULT NULL,
+  `sapatos_textura` int DEFAULT '0',
+  `acessorios` int DEFAULT NULL,
+  `acessorios_textura` int DEFAULT '0',
+  `camisetabug` int DEFAULT NULL,
+  `camisetabug_textura` int DEFAULT '0',
+  `coletes` int DEFAULT NULL,
+  `coletes_textura` int DEFAULT '0',
+  `decals` int DEFAULT NULL,
+  `decals_textura` int DEFAULT '0',
+  `camiseta` int DEFAULT NULL,
+  `camiseta_textura` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela cyberarcadia.players_data
 CREATE TABLE IF NOT EXISTS `players_data` (
-  `id` int(11) DEFAULT NULL,
-  `Nome` varchar(50) DEFAULT 'Índividuo',
-  `Sobrenome` varchar(50) DEFAULT 'Indigente',
-  `Idade` int(11) DEFAULT 18,
-  `sexo` varchar(50) DEFAULT NULL,
-  `grupo` varchar(50) DEFAULT NULL,
-  `organizacao` varchar(50) DEFAULT NULL,
-  `lastposition` varchar(500) DEFAULT NULL,
-  `dinheiro` int(11) DEFAULT 5000,
-  `banco` int(11) DEFAULT 0,
-  `trabalho` varchar(50) DEFAULT NULL,
-  `cargo` varchar(50) DEFAULT NULL
+  `id` int DEFAULT NULL,
+  `Nome` varchar(50) COLLATE utf8mb4_general_ci DEFAULT 'Índividuo',
+  `Sobrenome` varchar(50) COLLATE utf8mb4_general_ci DEFAULT 'Indigente',
+  `Idade` int DEFAULT '18',
+  `sexo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `grupo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `organizacao` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lastposition` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dinheiro` int DEFAULT '5000',
+  `banco` int DEFAULT '0',
+  `trabalho` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cargo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela cyberarcadia.players_props
 CREATE TABLE IF NOT EXISTS `players_props` (
-  `id` int(11) DEFAULT NULL,
-  `chapeu` int(11) DEFAULT NULL,
-  `chapeu_textura` int(11) DEFAULT NULL,
-  `oculos` int(11) DEFAULT NULL,
-  `oculos_textura` int(11) DEFAULT NULL,
-  `orelhas` int(11) DEFAULT NULL,
-  `orelhas_textura` int(11) DEFAULT NULL,
-  `relogios` int(11) DEFAULT NULL,
-  `relogios_textura` int(11) DEFAULT NULL,
-  `braceletes` int(11) DEFAULT NULL,
-  `braceletes_textura` int(11) DEFAULT NULL
+  `id` int DEFAULT NULL,
+  `chapeu` int DEFAULT NULL,
+  `chapeu_textura` int DEFAULT NULL,
+  `oculos` int DEFAULT NULL,
+  `oculos_textura` int DEFAULT NULL,
+  `orelhas` int DEFAULT NULL,
+  `orelhas_textura` int DEFAULT NULL,
+  `relogios` int DEFAULT NULL,
+  `relogios_textura` int DEFAULT NULL,
+  `braceletes` int DEFAULT NULL,
+  `braceletes_textura` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Exportação de dados foi desmarcado.
