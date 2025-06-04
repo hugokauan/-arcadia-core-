@@ -109,6 +109,8 @@ AddEventHandler('arcadia:updateplayerpos',function(pcoords,id)
             --print(affectedRows)
         end
     end)
+    TriggerClientEvent('REGISTERCLOTHES', -1)
+    --TriggerClientEvent('arcadia_client:savePlayerOutfit', -1)
 end)
 
 
@@ -131,10 +133,11 @@ AddEventHandler('arcadia:serversetspawnpos', function()
     end
 end)
 
-RegisterNetEvent('arcadia_server:savePlayerClothes')
+--[[RegisterNetEvent('arcadia_server:savePlayerClothes')
 AddEventHandler('arcadia_server:savePlayerClothes',function(mascara,cabelo,maos,calcas,mochilas,sapatos,acessorios,rasgos,colete,decals,camisetas)
     local id = ARCADIA.getPlayerId(source)
     local response = MySQL.prepare.await('SELECT id FROM players_clothing WHERE id = ?', {id})
+    print(response)
     if response ~= nil then
         -- MASCARA
         MySQL.Async.execute('UPDATE players_clothing SET mascara = ? WHERE id = ? ', {mascara,id}, function(affectedRows)
@@ -207,14 +210,6 @@ AddEventHandler('arcadia_server:savePlayerClothes',function(mascara,cabelo,maos,
     end
 end)
 
-RegisterNetEvent('arcadia_server:savePlayerTextures')
-AddEventHandler('arcadia_server:savePlayerTextures',function()
-end)
-
-RegisterNetEvent('arcadia_server:savePlayerProps')
-AddEventHandler('arcadia_server:savePlayerProps',function()
-end)
-
 RegisterNetEvent('arcadia_server:setPlayerClothing')
 AddEventHandler('arcadia_server:setPlayerClothing', function()
     local id = ARCADIA.getPlayerId(source)
@@ -267,9 +262,14 @@ AddEventHandler('arcadia_server:setPlayerClothing', function()
                 Citizen.Wait(5)
             end
         end
+    else
+        for i = 1, 11 do
+            TriggerClientEvent('arcadia_client:setPlayerClothing', source, i, 0)
+            Citizen.Wait(5)
+        end
     end
 end)
-
+--]]
 AddEventHandler('playerDropped', function(reason) 
     local playerSrc = source
     local ped = GetPlayerPed(playerSrc)
@@ -280,4 +280,9 @@ AddEventHandler('playerDropped', function(reason)
     print("antes de salvar")
     TriggerEvent('arcadia:updateplayerpos',playerCoords,id) 
     print("informações salvas ", playerSrc)
+end)
+
+RegisterNetEvent('CONSOLE_WARNING')
+AddEventHandler('CONSOLE_WARNING', function(message)
+    print(message)
 end)

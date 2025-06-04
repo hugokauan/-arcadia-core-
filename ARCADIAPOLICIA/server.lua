@@ -28,7 +28,29 @@ AddEventHandler('ARCADIA:SETARMAS', function()
         TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1, 'Você não é policial')
     end
 end)
-
+--[[BLOCO 1 (CÓDIGO DO VESTIARIO DA POLICIA)]]
+RegisterNetEvent('ARCADIA_SERVER:SETCLOTHES')
+AddEventHandler('ARCADIA_SERVER:SETCLOTHES', function()
+    local src = source
+    local ped = GetPlayerPed(source)
+    if ARCADIA.isJob(src, 'policia') then
+        if ARCADIA.isCargo(src, 'soldado') then
+            print('Fardamento Coletado')
+            TriggerClientEvent('ARCADIA_CLIENT:SETCLOTHES', src)
+        elseif ARCADIA.isCargo(src, 'cabo') then
+            print('Fardamento Coletado')
+            TriggerClientEvent('ARCADIA_CLIENT:SETCLOTHES', src)
+        elseif ARCADIA.isCargo(src, 'comandante') then
+            print('Fardamento Coletado')
+            TriggerClientEvent('ARCADIA_CLIENT:SETCLOTHES', src)
+        end
+        local menssagem = "Você Recebeu Seu Fardamento"
+        TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1, menssagem)
+    else
+        TriggerClientEvent('ARCADIACLIENT:NOTIFICACAO', -1, 'Você não é policial')
+    end
+end)
+-----
 RegisterNetEvent('ARCADIA_SERVER:SETGUNS')
 AddEventHandler('ARCADIA_SERVER:SETGUNS', function (kit)
     local choiceKit = kit

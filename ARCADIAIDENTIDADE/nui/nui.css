@@ -1,38 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital@1&display=swap');
 
-*{
-    font-family: 'Kanit', sans-serif;
-    font-size: 18px;
-}
 
-.Top{
-    background-color: white;
+
+.id .Top{
+    background-color: rgb(255, 255, 255);
     position: absolute;
-    top: 0%;
-    left: 0%;
     height: 15%;
     width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    text-align: center;
-    font-family: 'lemon', serif !important;
-    font-size: 30px;
+    /* border-top-right-radius: 3%; */
+    /* border-top-left-radius: 3%; */
+    border-radius: 3%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 100%;
 }
-.Top #text{
-    
+.id .Top #texto{
+    position: absolute;
+    left: 27%;
+    top: 35%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
 }
 
 
 .id {
     display: none;
     position: absolute;
-    background-color: black;
+    background-color: rgb(71, 71, 71);
     height: 45%;
     width: 18%;
     top: 40%;
     left: 75%;
-    border-radius: 10px;
+    border-radius: 3%;
+    border-color: rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 5px;
 }
 
 .id #passaporte{
