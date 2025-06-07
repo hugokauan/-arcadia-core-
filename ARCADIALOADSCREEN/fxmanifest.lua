@@ -3,7 +3,7 @@ fx_version 'cerulean'
 game'gta5' 
 
 author 'Carvalho'
-description 'ARCADIA ANIMATIONS'
+description 'ARCADIA LOADSCREEN'
 version '1.0.0'
 
 -- What to run

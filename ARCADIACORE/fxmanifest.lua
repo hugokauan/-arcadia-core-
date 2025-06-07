@@ -8,7 +8,7 @@ version '1.0.0'
 
 client_scripts {
     'lib/functions.lua',
-    'lib/events.lua',
+    'lib/events_C.lua',
     'lib/groups.lua',
     'client.lua'
 }
@@ -17,7 +17,7 @@ client_scripts {
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'lib/functions.lua',
-    'lib/events.lua',
+    'lib/events_S.lua',
     'lib/groups.lua',
     'server.lua'
 }

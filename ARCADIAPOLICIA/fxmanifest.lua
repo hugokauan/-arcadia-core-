@@ -11,14 +11,14 @@ client_script {
     'client.lua',
     '@ARCADIACORE/lib/functions.lua',
     'config.lua',
-    '@ARCADIACORE/lib/events.lua'
+    '@ARCADIACORE/lib/events_C.lua'
 }
 server_script {
     '@oxmysql/lib/MySQL.lua',
     'server.lua',
     'config.lua',
     '@ARCADIACORE/lib/functions.lua',
-    '@ARCADIACORE/lib/events.lua'
+    '@ARCADIACORE/lib/events_S.lua'
 }
 
 files {

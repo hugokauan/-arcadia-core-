@@ -281,8 +281,3 @@ AddEventHandler('playerDropped', function(reason)
     TriggerEvent('arcadia:updateplayerpos',playerCoords,id) 
     print("informações salvas ", playerSrc)
 end)
-
-RegisterNetEvent('CONSOLE_WARNING')
-AddEventHandler('CONSOLE_WARNING', function(message)
-    print(message)
-end)

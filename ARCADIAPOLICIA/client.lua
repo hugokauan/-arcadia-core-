@@ -179,13 +179,12 @@ AddEventHandler('ARCADIA_CLIENT:SETCLOTHES', function()
                 end
             end
         else
-            TriggerServerEvent("CONSOLE_WARING","[ARACADIAPOLICIA:CLIENT]: gênero não identificado")
+            TriggerServerEvent("CONSOLE_WARNING",GetCurrentResourceName,"CLIENT","gênero não identificado")
         end
     end
     print(isFardado)
 end)
 
--- refazer código para apenas policiais conseguirem usar o vestiário
 Citizen.CreateThread(function()
     local playerPed
     local marker
